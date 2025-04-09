@@ -8,5 +8,8 @@
     "*": {
       "*": ["./src/*"]
     }
+  },
+  "dependencies": {
+    "@sa/uno-preset": "file:"
   }
 }

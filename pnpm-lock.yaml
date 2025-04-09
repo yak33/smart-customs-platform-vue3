@@ -227,11 +227,18 @@ importers:
 
   packages/ofetch:
     dependencies:
+      '@sa/fetch':
+        specifier: 'file:'
+        version: 'link:'
       ofetch:
         specifier: 1.4.1
         version: 1.4.1
 
   packages/scripts:
+    dependencies:
+      '@sa/scripts':
+        specifier: 'file:'
+        version: 'link:'
     devDependencies:
       '@soybeanjs/changelog':
         specifier: 0.3.24
@@ -264,10 +271,17 @@ importers:
         specifier: 6.0.1
         version: 6.0.1
 
-  packages/uno-preset: {}
+  packages/uno-preset:
+    dependencies:
+      '@sa/uno-preset':
+        specifier: 'file:'
+        version: 'link:'
 
   packages/utils:
     dependencies:
+      '@sa/utils':
+        specifier: 'file:'
+        version: 'link:'
       colord:
         specifier: 2.9.3
         version: 2.9.3

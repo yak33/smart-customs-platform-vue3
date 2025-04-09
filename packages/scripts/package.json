@@ -12,6 +12,9 @@
       "*": ["./src/*"]
     }
   },
+  "dependencies": {
+    "@sa/scripts": "file:"
+  },
   "devDependencies": {
     "@soybeanjs/changelog": "0.3.24",
     "bumpp": "9.10.1",
