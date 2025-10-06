@@ -1,0 +1,9 @@
+{
+    "i18n-ally.localesPaths": [
+        "src/locales",
+        "src/locales/langs",
+        "packages/scripts/src/locales"
+    ],
+    "search.useGlobalIgnoreFiles": true,
+    "search.useParentIgnoreFiles": true
+}
