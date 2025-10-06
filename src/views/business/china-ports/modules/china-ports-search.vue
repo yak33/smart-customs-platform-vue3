@@ -1,10 +1,3 @@
-<!--
- * @Author: ZHANGCHAO
- * @Date: 2025-06-21 00:29:53
- * @LastEditors: ZHANGCHAO
- * @LastEditTime: 2025-06-22 01:21:17
- * @FilePath: \smart-customs-platform\ruoyi-plus-soybean\src\views\business\china-ports\modules\china-ports-search.vue
--->
 <script setup lang="ts">
 import { useNaiveForm } from '@/hooks/common/form';
 import { $t } from '@/locales';
@@ -40,7 +33,7 @@ async function search() {
   <NCard :bordered="false" size="small" class="card-wrapper">
     <NCollapse>
       <NCollapseItem :title="$t('common.search')" name="user-search">
-        <NForm ref="formRef" :model="model" label-placement="left" :label-width="80">
+        <NForm ref="formRef" :model="model" label-placement="left" :label-width="100">
           <NGrid responsive="screen" item-responsive>
             <NFormItemGi span="24 s:12 m:6" label="口岸编码" path="chinaPortCode" class="pr-24px">
               <NInput v-model:value="model.chinaPortCode" placeholder="口岸编码" @keyup.enter="search" />

@@ -85,16 +85,6 @@ const {
       width: 230
     },
     {
-      key: 'controLmark',
-      title: '监管条件',
-      align: 'center',
-      resizable: true,
-      ellipsis: {
-        tooltip: true
-      },
-      width: 120
-    },
-    {
       key: 'unit1',
       title: '法一单位',
       align: 'center',
@@ -127,6 +117,16 @@ const {
     {
       key: 'unit2name',
       title: '法二名称',
+      align: 'center',
+      resizable: true,
+      ellipsis: {
+        tooltip: true
+      },
+      width: 120
+    },
+    {
+      key: 'controLmark',
+      title: '监管条件',
       align: 'center',
       resizable: true,
       ellipsis: {

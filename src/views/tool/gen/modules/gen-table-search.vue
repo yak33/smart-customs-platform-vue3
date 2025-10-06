@@ -54,10 +54,10 @@ async function search() {
               <NSelect v-model:value="model.dataName" :options="options" placeholder="请选择数据源" />
             </NFormItemGi>
             <NFormItemGi span="24 s:12 m:6" label="表名称" path="tableName" class="pr-24px">
-              <NInput v-model:value="model.tableName" placeholder="请输入表名称" />
+              <NInput v-model:value="model.tableName" placeholder="请输入表名称" @keyup.enter="search" />
             </NFormItemGi>
             <NFormItemGi span="24 s:12 m:6" label="表描述" path="tableComment" class="pr-24px">
-              <NInput v-model:value="model.tableComment" placeholder="请输入表描述" />
+              <NInput v-model:value="model.tableComment" placeholder="请输入表描述" @keyup.enter="search" />
             </NFormItemGi>
             <NFormItemGi span="24 s:12 m:6" label="创建时间" class="pr-24px">
               <NDatePicker

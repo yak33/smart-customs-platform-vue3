@@ -33,19 +33,19 @@ async function search() {
   <NCard :bordered="false" size="small" class="card-wrapper">
     <NCollapse>
       <NCollapseItem :title="$t('common.search')" name="user-search">
-        <NForm ref="formRef" :model="model" label-placement="left" :label-width="80">
+        <NForm ref="formRef" :model="model" label-placement="left" :label-width="100">
           <NGrid responsive="screen" item-responsive>
-            <NFormItemGi span="24 s:12 m:6" label="币制编码" path="code" class="pr-24px">
-              <NInput v-model:value="model.code" placeholder="请输入币制编码" @keyup.enter="search"/>
+            <NFormItemGi span="24 s:12 m:6" label="币制编码" path="code" class="pr-20px">
+              <NInput v-model:value="model.code" placeholder="请输入币制编码" @keyup.enter="search" />
             </NFormItemGi>
-            <NFormItemGi span="24 s:12 m:6" label="币制" path="currency" class="pr-24px">
-              <NInput v-model:value="model.currency" placeholder="请输入币制" @keyup.enter="search"/>
+            <NFormItemGi span="24 s:12 m:6" label="币制" path="currency" class="pr-20px">
+              <NInput v-model:value="model.currency" placeholder="请输入币制" @keyup.enter="search" />
             </NFormItemGi>
-            <NFormItemGi span="24 s:12 m:6" label="币制名称" path="name" class="pr-24px">
-              <NInput v-model:value="model.name" placeholder="请输入币制名称" @keyup.enter="search"/>
+            <NFormItemGi span="24 s:12 m:6" label="币制名称" path="name" class="pr-20px">
+              <NInput v-model:value="model.name" placeholder="请输入币制名称" @keyup.enter="search" />
             </NFormItemGi>
-            <NFormItemGi span="24 s:12 m:6" label="币制英文名称" path="enname" class="pr-24px">
-              <NInput v-model:value="model.enname" placeholder="请输入币制英文名称" @keyup.enter="search"/>
+            <NFormItemGi span="24 s:12 m:6" label="币制英文名称" path="enname" class="pr-20px">
+              <NInput v-model:value="model.enname" placeholder="请输入币制英文名称" @keyup.enter="search" />
             </NFormItemGi>
             <NFormItemGi span="24" class="pr-24px">
               <NSpace class="w-full" justify="end">

@@ -14,10 +14,6 @@ const { state } = storeToRefs(noticeStore);
 const noticeNum = computed(() => {
   return state.value.notices.filter(notice => !notice.read).length || 0;
 });
-
-const toGitee = () => {
-  window.open('https://gitee.com/xlsea/ruoyi-plus-soybean', '_blank');
-};
 </script>
 
 <template>
@@ -82,11 +78,6 @@ const toGitee = () => {
         </template>
         <NEmpty v-else class="h-180px flex-center" />
       </NScrollbar>
-      <template #footer>
-        <div class="flex items-center justify-end">
-          <NButton type="primary" size="small" @click="toGitee">前往 Gitee</NButton>
-        </div>
-      </template>
     </NCard>
   </NPopover>
 </template>
