@@ -26,6 +26,7 @@ export const views: Record<LastLevelRouteKey, RouteComponent | (() => Promise<Ro
   business_cityports: () => import("@/views/business/cityports/index.vue"),
   business_countries: () => import("@/views/business/countries/index.vue"),
   business_currencies: () => import("@/views/business/currencies/index.vue"),
+  "business_customs-ports": () => import("@/views/business/customs-ports/index.vue"),
   business_hscode: () => import("@/views/business/hscode/index.vue"),
   demo_demo: () => import("@/views/demo/demo/index.vue"),
   demo_tree: () => import("@/views/demo/tree/index.vue"),

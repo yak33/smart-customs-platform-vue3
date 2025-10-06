@@ -85,6 +85,15 @@ export const generatedRoutes: GeneratedRoute[] = [
         }
       },
       {
+        name: 'business_customs-ports',
+        path: '/business/customs-ports',
+        component: 'view.business_customs-ports',
+        meta: {
+          title: 'business_customs-ports',
+          i18nKey: 'route.business_customs-ports'
+        }
+      },
+      {
         name: 'business_hscode',
         path: '/business/hscode',
         component: 'view.business_hscode',

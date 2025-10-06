@@ -175,6 +175,7 @@ const routeMap: RouteMap = {
   "business_cityports": "/business/cityports",
   "business_countries": "/business/countries",
   "business_currencies": "/business/currencies",
+  "business_customs-ports": "/business/customs-ports",
   "business_hscode": "/business/hscode",
   "demo": "/demo",
   "demo_demo": "/demo/demo",
