@@ -19,7 +19,7 @@
 
 ## 📖 项目简介
 
-智慧关务平台前端是基于 Vue 3、TypeScript、Vite 7 和 Naive UI 构建的现代化企业级管理系统前端应用，采用 Monorepo 架构，提供完整的权限管理、动态路由、主题切换等功能，专注于提供智能化的海关业务管理解决方案。
+智慧关务平台前端服务，基于 Vue 3、TypeScript、Vite 7 和 Naive UI 构建，项目底层重写自 soybean-admin 和 ruoyi-plus-soybean，提供完整的权限管理、动态路由、主题切换等功能，专注于提供智能化的海关业务管理解决方案。
 
 ### ✨ 核心特性
 
