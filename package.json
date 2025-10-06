@@ -1,7 +1,7 @@
 {
   "name": "smart-customs-platform",
   "type": "module",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "智慧关务平台，专注于提供智能化的海关业务管理解决方案",
   "author": {
     "name": "ZHANGCHAO",
