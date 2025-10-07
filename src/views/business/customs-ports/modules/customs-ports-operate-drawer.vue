@@ -27,7 +27,6 @@ const visible = defineModel<boolean>('visible', {
   default: false
 });
 
-
 const { formRef, validate, restoreValidation } = useNaiveForm();
 const { createRequiredRule } = useFormRules();
 
@@ -51,7 +50,7 @@ function createDefaultModel(): Model {
   };
 }
 
-type RuleKey = Extract<keyof Model, 'customsPortCode' | 'name' | 'langName'>;
+type RuleKey = Extract<keyof Model, 'customsPortCode' | 'name'>;
 
 const rules: Record<RuleKey, App.Global.FormRule> = {
   customsPortCode: createRequiredRule('关区编码不能为空'),
@@ -82,14 +81,15 @@ async function handleSubmit() {
   if (props.operateType === 'add') {
     const { error } = await fetchCreateCustomsPorts({ customsPortCode, name, langName });
     if (error) return;
+    window.$message?.success($t('common.addSuccess'));
   }
 
   if (props.operateType === 'edit') {
     const { error } = await fetchUpdateCustomsPorts({ id, customsPortCode, name, langName });
     if (error) return;
+    window.$message?.success($t('common.updateSuccess'));
   }
 
-  window.$message?.success($t('common.updateSuccess'));
   closeDrawer();
   emit('submitted');
 }
