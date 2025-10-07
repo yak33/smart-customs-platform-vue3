@@ -244,7 +244,10 @@ async function handleGenCode(row?: Api.Tool.GenTable) {
     if (error) return;
     window.$message?.success('生成成功');
   } else {
-    zip(`/tool/gen/batchGenCode?tableIdStr=${tableIds}`, `RuoYi-${row?.tableId ? `${row.className}` : Date.now()}.zip`);
+    await zip(
+      `/tool/gen/batchGenCode?tableIdStr=${tableIds}`,
+      `SmartCustoms-${row?.tableId ? `${row.className}` : Date.now()}.zip`
+    );
   }
 }
 
