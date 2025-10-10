@@ -90,8 +90,8 @@ export function useDownload() {
   }
 
   /** 核心下载逻辑 */
-  async function executeDownload(config: RequestConfig): Promise<void> {
-    const { method, url, params, filename, contentType } = config;
+  async function executeDownload(config: RequestConfig & { disableStream?: boolean; streamThreshold?: number }): Promise<void> {
+    const { method, url, params, filename, contentType, disableStream = false, streamThreshold = 50 * 1024 * 1024 } = config; // 默认 50MB 以上使用流式下载
     const timestamp = Date.now();
     const fullUrl = `${baseURL}${url}${url.includes('?') ? '&' : '?'}t=${timestamp}`;
 
@@ -118,19 +118,46 @@ export function useDownload() {
       }
 
       await handleResponse(response);
-
       const rawHeader = response.headers.get('Download-Filename');
-      const finalFilename = filename || (rawHeader ? decodeURIComponent(rawHeader) : null) || `download-${timestamp}`;
+      let finalFilename = filename || (rawHeader ? decodeURIComponent(rawHeader) : null) || `download-${timestamp}`;
 
-      if (response.body && isHttps()) {
-        const contentLength = Number(response.headers.get('Content-Length'));
+      finalFilename = finalFilename.replace(/[<>:"/\\|?*]/g, '_');
+
+      const contentLength = Number(response.headers.get('Content-Length')) || 0;
+
+      // 智能选择下载方式：仅在文件大于阈值且满足条件时使用流式下载
+      const shouldUseStream = !disableStream && response.body && isHttps() && contentLength > streamThreshold;
+
+      if (shouldUseStream) {
         await downloadByStream(response.body, finalFilename, contentLength);
         return;
       }
 
+      // 确定文件的 MIME 类型
+      let mimeType = 'application/octet-stream';
       const responseContentType = response.headers.get('Content-Type');
-      const mainType = responseContentType?.split(';')[0]?.trim() || 'application/octet-stream';
-      downloadByData(await response.blob(), finalFilename, mainType);
+
+      // 根据文件扩展名设置正确的 MIME 类型
+      const lowerFilename = finalFilename.toLowerCase();
+      if (lowerFilename.endsWith('.zip')) {
+        mimeType = 'application/zip';
+      } else if (lowerFilename.endsWith('.xlsx') || lowerFilename.endsWith('.xls')) {
+        mimeType = 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet';
+      } else if (lowerFilename.endsWith('.docx') || lowerFilename.endsWith('.doc')) {
+        mimeType = 'application/vnd.openxmlformats-officedocument.wordprocessingml.document';
+      } else if (lowerFilename.endsWith('.pdf')) {
+        mimeType = 'application/pdf';
+      } else if (lowerFilename.endsWith('.jpg') || lowerFilename.endsWith('.jpeg')) {
+        mimeType = 'image/jpeg';
+      } else if (lowerFilename.endsWith('.png')) {
+        mimeType = 'image/png';
+      } else if (lowerFilename.endsWith('.gif')) {
+        mimeType = 'image/gif';
+      } else if (responseContentType) {
+        mimeType = responseContentType.split(';')[0]?.trim() || 'application/octet-stream';
+      }
+
+      downloadByData(await response.blob(), finalFilename, mimeType);
     } catch (error: any) {
       window.$message?.error(error.message);
     } finally {
@@ -146,7 +173,8 @@ export function useDownload() {
   const oss = (ossId: CommonType.IdType) =>
     executeDownload({
       method: 'GET',
-      url: `/resource/oss/download/${ossId}`
+      url: `/resource/oss/download/${ossId}`,
+      streamThreshold: 100 * 1024 * 1024 // OSS 文件 100MB 以上才使用流式下载，避免小文件损坏
     });
 
   /** ZIP文件下载 */
@@ -155,7 +183,8 @@ export function useDownload() {
       method: 'GET',
       url,
       filename,
-      contentType: 'application/octet-stream'
+      contentType: 'application/octet-stream',
+      streamThreshold: 200 * 1024 * 1024 // ZIP 压缩文件 200MB 以上才使用流式下载
     });
 
   return {
