@@ -89,9 +89,52 @@ export function useDownload() {
     }
   }
 
+  /** 根据文件名获取 MIME 类型 */
+  function getMimeTypeByFilename(filename: string, responseContentType?: string | null): string {
+    const lowerFilename = filename.toLowerCase();
+
+    // 文件扩展名到 MIME 类型的映射
+    const mimeTypeMap: Record<string, string> = {
+      '.zip': 'application/zip',
+      '.xlsx': 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+      '.xls': 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+      '.docx': 'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
+      '.doc': 'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
+      '.pdf': 'application/pdf',
+      '.jpg': 'image/jpeg',
+      '.jpeg': 'image/jpeg',
+      '.png': 'image/png',
+      '.gif': 'image/gif'
+    };
+
+    // 查找匹配的扩展名
+    for (const [ext, mimeType] of Object.entries(mimeTypeMap)) {
+      if (lowerFilename.endsWith(ext)) {
+        return mimeType;
+      }
+    }
+
+    // 如果没有匹配的扩展名，使用响应头的 Content-Type
+    if (responseContentType) {
+      return responseContentType.split(';')[0]?.trim() || 'application/octet-stream';
+    }
+
+    return 'application/octet-stream';
+  }
+
   /** 核心下载逻辑 */
-  async function executeDownload(config: RequestConfig & { disableStream?: boolean; streamThreshold?: number }): Promise<void> {
-    const { method, url, params, filename, contentType, disableStream = false, streamThreshold = 50 * 1024 * 1024 } = config; // 默认 50MB 以上使用流式下载
+  async function executeDownload(
+    config: RequestConfig & { disableStream?: boolean; streamThreshold?: number }
+  ): Promise<void> {
+    const {
+      method,
+      url,
+      params,
+      filename,
+      contentType,
+      disableStream = false,
+      streamThreshold = 50 * 1024 * 1024
+    } = config; // 默认 50MB 以上使用流式下载
     const timestamp = Date.now();
     const fullUrl = `${baseURL}${url}${url.includes('?') ? '&' : '?'}t=${timestamp}`;
 
@@ -119,43 +162,24 @@ export function useDownload() {
 
       await handleResponse(response);
       const rawHeader = response.headers.get('Download-Filename');
-      let finalFilename = filename || (rawHeader ? decodeURIComponent(rawHeader) : null) || `download-${timestamp}`;
+      let finalFilename = filename || (rawHeader ? decodeURIComponent(rawHeader) : '') || `download-${timestamp}`;
 
       finalFilename = finalFilename.replace(/[<>:"/\\|?*]/g, '_');
 
+      // 获取文件大小
       const contentLength = Number(response.headers.get('Content-Length')) || 0;
 
       // 智能选择下载方式：仅在文件大于阈值且满足条件时使用流式下载
       const shouldUseStream = !disableStream && response.body && isHttps() && contentLength > streamThreshold;
 
-      if (shouldUseStream) {
+      if (shouldUseStream && response.body) {
         await downloadByStream(response.body, finalFilename, contentLength);
         return;
       }
 
       // 确定文件的 MIME 类型
-      let mimeType = 'application/octet-stream';
       const responseContentType = response.headers.get('Content-Type');
-
-      // 根据文件扩展名设置正确的 MIME 类型
-      const lowerFilename = finalFilename.toLowerCase();
-      if (lowerFilename.endsWith('.zip')) {
-        mimeType = 'application/zip';
-      } else if (lowerFilename.endsWith('.xlsx') || lowerFilename.endsWith('.xls')) {
-        mimeType = 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet';
-      } else if (lowerFilename.endsWith('.docx') || lowerFilename.endsWith('.doc')) {
-        mimeType = 'application/vnd.openxmlformats-officedocument.wordprocessingml.document';
-      } else if (lowerFilename.endsWith('.pdf')) {
-        mimeType = 'application/pdf';
-      } else if (lowerFilename.endsWith('.jpg') || lowerFilename.endsWith('.jpeg')) {
-        mimeType = 'image/jpeg';
-      } else if (lowerFilename.endsWith('.png')) {
-        mimeType = 'image/png';
-      } else if (lowerFilename.endsWith('.gif')) {
-        mimeType = 'image/gif';
-      } else if (responseContentType) {
-        mimeType = responseContentType.split(';')[0]?.trim() || 'application/octet-stream';
-      }
+      const mimeType = getMimeTypeByFilename(finalFilename, responseContentType);
 
       downloadByData(await response.blob(), finalFilename, mimeType);
     } catch (error: any) {
