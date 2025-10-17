@@ -157,8 +157,8 @@ export const request = createFlatRequest<App.Service.Response, RequestInstanceSt
 
       // get backend error message and code
       if (error.code === BACKEND_ERROR_CODE) {
-        message = error.response?.data?.msg ||
-         (error.response?.status === 500 ? '服务器内部错误，请稍后重试' : message);
+        message =
+          error.response?.data?.msg || (error.response?.status === 500 ? '服务器内部错误，请稍后重试' : message);
         backendErrorCode = String(error.response?.data?.code || '');
       }
 

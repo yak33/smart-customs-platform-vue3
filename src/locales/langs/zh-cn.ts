@@ -235,6 +235,9 @@ const local: App.I18n.Schema = {
     'business_china-ports': '港口',
     business_cityports: '城市港口',
     business_currencies: '币制管理',
+    business_countries: '国家管理',
+    'business_customs-ports': '海关口岸',
+    business_hscode: 'HS编码',
     exception: '异常页',
     exception_403: '403',
     exception_404: '404',
@@ -332,8 +335,8 @@ const local: App.I18n.Schema = {
   page: {
     login: {
       common: {
-        title: '现代化的企业级多租户管理系统',
-        subTitle: '为开发者提供了完整的企业管理解决方案',
+        title: '现代化的智慧关务平台',
+        subTitle: '专注于提供智能化的海关业务管理解决方案',
         loginOrRegister: '登录 / 注册',
         register: '注册',
         userNamePlaceholder: '请输入用户名',

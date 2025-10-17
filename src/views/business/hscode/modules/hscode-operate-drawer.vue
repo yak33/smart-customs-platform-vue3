@@ -67,12 +67,7 @@ function createDefaultModel(): Model {
   };
 }
 
-type RuleKey = Extract<
-  keyof Model,
-  | 'hscode'
-  | 'gname'
-  | 'isEnable'
->;
+type RuleKey = Extract<keyof Model, 'hscode' | 'gname' | 'isEnable'>;
 
 const rules: Record<RuleKey, App.Global.FormRule> = {
   hscode: createRequiredRule('税号不能为空'),

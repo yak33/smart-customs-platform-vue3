@@ -235,6 +235,9 @@ const local: App.I18n.Schema = {
     'business_china-ports': 'Ports',
     business_cityports: 'City Ports',
     business_currencies: 'Currencies',
+    business_countries: 'Countries',
+    'business_customs-ports': 'Customs Ports',
+    business_hscode: 'HS Code',
     exception: 'Exception',
     exception_403: '403',
     exception_404: '404',
@@ -332,8 +335,8 @@ const local: App.I18n.Schema = {
   page: {
     login: {
       common: {
-        title: 'Modern enterprise-level multi-tenant management system',
-        subTitle: 'Provides developers with a complete enterprise management solution',
+        title: 'Modern Smart Customs Platform',
+        subTitle: 'Focus on providing intelligent customs business management solutions',
         loginOrRegister: 'Login / Register',
         register: 'Register',
         userNamePlaceholder: 'Please enter user name',

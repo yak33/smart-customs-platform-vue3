@@ -1,5 +1,5 @@
 <script setup lang="tsx">
-import { NDivider, NTag} from 'naive-ui';
+import { NDivider, NTag } from 'naive-ui';
 import { fetchBatchDeleteCityports, fetchGetCityportsList } from '@/service/api/business/cityports';
 import { useAppStore } from '@/store/modules/app';
 import { useAuth } from '@/hooks/business/auth';
@@ -100,7 +100,11 @@ const {
         const delFlag = Number(row.delFlag) === 0;
         const text = delFlag ? '正常' : '停用';
         const type = delFlag ? 'success' : 'default';
-        return <NTag type={type} size="small">{text}</NTag>;
+        return (
+          <NTag type={type} size="small">
+            {text}
+          </NTag>
+        );
       }
     },
     {
@@ -209,7 +213,7 @@ function handleExport() {
 <template>
   <div class="min-h-500px flex-col-stretch gap-16px overflow-hidden lt-sm:overflow-auto">
     <CityportsSearch v-model:model="searchParams" @reset="resetSearchParams" @search="getDataByPage" />
-    <NCard title="港口列表" :bordered="false" size="small" class="sm:flex-1-hidden card-wrapper">
+    <NCard title="港口列表" :bordered="false" size="small" class="card-wrapper sm:flex-1-hidden">
       <template #header-extra>
         <TableHeaderOperation
           v-model:columns="columnChecks"

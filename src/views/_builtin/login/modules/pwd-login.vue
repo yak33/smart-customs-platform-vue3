@@ -3,7 +3,6 @@ import { computed, reactive, ref } from 'vue';
 import type { SelectOption } from 'naive-ui';
 import { useLoading } from '@sa/hooks';
 import { fetchCaptchaCode, fetchTenantList } from '@/service/api';
-import { fetchSocialAuthBinding } from '@/service/api/system';
 import { useAuthStore } from '@/store/modules/auth';
 import { useRouterPush } from '@/hooks/common/router';
 import { useFormRules, useNaiveForm } from '@/hooks/common/form';
@@ -114,12 +113,6 @@ handleLoginRember();
 // }
 
 // handleRegister();
-
-async function handleSocialLogin(type: Api.System.SocialSource) {
-  const { data, error } = await fetchSocialAuthBinding(type, model.tenantId);
-  if (error) return;
-  window.location.href = data;
-}
 </script>
 
 <template>

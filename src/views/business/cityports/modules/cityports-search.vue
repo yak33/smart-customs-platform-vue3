@@ -36,13 +36,13 @@ async function search() {
         <NForm ref="formRef" :model="model" label-placement="left" :label-width="80">
           <NGrid responsive="screen" item-responsive>
             <NFormItemGi span="24 s:12 m:6" label="编码" path="cityportCode" class="pr-24px">
-              <NInput v-model:value="model.cityportCode" placeholder="请输入编码" @keyup.enter="search"/>
+              <NInput v-model:value="model.cityportCode" placeholder="请输入编码" @keyup.enter="search" />
             </NFormItemGi>
             <NFormItemGi span="24 s:12 m:6" label="中文名" path="cnname" class="pr-24px">
-              <NInput v-model:value="model.cnname" placeholder="请输入中文名" @keyup.enter="search"/>
+              <NInput v-model:value="model.cnname" placeholder="请输入中文名" @keyup.enter="search" />
             </NFormItemGi>
             <NFormItemGi span="24 s:12 m:6" label="英文名" path="enname" class="pr-24px">
-              <NInput v-model:value="model.enname" placeholder="请输入英文名" @keyup.enter="search"/>
+              <NInput v-model:value="model.enname" placeholder="请输入英文名" @keyup.enter="search" />
             </NFormItemGi>
             <NFormItemGi span="24" class="pr-24px">
               <NSpace class="w-full" justify="end">

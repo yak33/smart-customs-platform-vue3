@@ -105,7 +105,11 @@ const {
         const isEnabled = row.isenabled;
         const text = isEnabled ? '启用' : '未启用';
         const type = isEnabled ? 'success' : 'default';
-        return <NTag type={type} size="small">{text}</NTag>;
+        return (
+          <NTag type={type} size="small">
+            {text}
+          </NTag>
+        );
       },
       width: 90
     },
@@ -195,7 +199,7 @@ function handleExport() {
 <template>
   <div class="min-h-500px flex-col-stretch gap-16px overflow-hidden lt-sm:overflow-auto">
     <CountriesSearch v-model:model="searchParams" @reset="resetSearchParams" @search="getDataByPage" />
-    <NCard title="国家列表" :bordered="false" size="small" class="sm:flex-1-hidden card-wrapper">
+    <NCard title="国家列表" :bordered="false" size="small" class="card-wrapper sm:flex-1-hidden">
       <template #header-extra>
         <TableHeaderOperation
           v-model:columns="columnChecks"

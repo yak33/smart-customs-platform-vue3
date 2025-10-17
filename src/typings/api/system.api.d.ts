@@ -163,6 +163,8 @@ declare namespace Api {
       postIds: string[];
       /** user role ids */
       roleIds: string[];
+      /** user roles */
+      roles: Role[];
     };
 
     /** user list */
@@ -373,7 +375,15 @@ declare namespace Api {
     type DictDataOperateParams = CommonType.RecordNullable<
       Pick<
         Api.System.DictData,
-        'dictCode' | 'dictSort' | 'dictLabel' | 'dictValue' | 'dictType' | 'cssClass' | 'listClass' | 'remark'
+        | 'dictCode'
+        | 'dictSort'
+        | 'dictLabel'
+        | 'dictValue'
+        | 'dictType'
+        | 'cssClass'
+        | 'listClass'
+        | 'isDefault'
+        | 'remark'
       >
     >;
 

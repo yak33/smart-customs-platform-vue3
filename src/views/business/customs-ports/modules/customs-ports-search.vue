@@ -15,9 +15,7 @@ const emit = defineEmits<Emits>();
 
 const { formRef, validate, restoreValidation } = useNaiveForm();
 
-
 const model = defineModel<Api.Business.CustomsPortsSearchParams>('model', { required: true });
-
 
 async function reset() {
   Object.assign(model.value.params!, {});

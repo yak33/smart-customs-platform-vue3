@@ -197,7 +197,11 @@ const {
         const isEnabled = Number(row.isEnable) === 1;
         const text = isEnabled ? '启用' : '未启用';
         const type = isEnabled ? 'success' : 'default';
-        return <NTag type={type} size="small">{text}</NTag>;
+        return (
+          <NTag type={type} size="small">
+            {text}
+          </NTag>
+        );
       }
     },
     {

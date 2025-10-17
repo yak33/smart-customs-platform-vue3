@@ -10,9 +10,7 @@ export function createDocumentTitleGuard(router: Router) {
     const platformTitle = $t('system.title');
 
     // 如果页面标题存在且不等于平台标题，则显示为"平台名称 - 页面名称"
-    const documentTitle = pageTitle && pageTitle !== platformTitle
-      ? `${platformTitle} - ${pageTitle}`
-      : platformTitle;
+    const documentTitle = pageTitle && pageTitle !== platformTitle ? `${platformTitle} - ${pageTitle}` : platformTitle;
 
     useTitle(documentTitle);
   });
