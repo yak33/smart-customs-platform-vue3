@@ -239,6 +239,7 @@ const local: App.I18n.Schema = {
     'business_customs-ports': '海关口岸',
     business_hscode: 'HS编码',
     business_units: '货物单位编码',
+    'business_customer-enterprise': '客户企业',
     exception: '异常页',
     exception_403: '403',
     exception_404: '404',

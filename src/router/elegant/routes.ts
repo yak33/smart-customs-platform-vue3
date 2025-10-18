@@ -85,6 +85,15 @@ export const generatedRoutes: GeneratedRoute[] = [
         }
       },
       {
+        name: 'business_customer-enterprise',
+        path: '/business/customer-enterprise',
+        component: 'view.business_customer-enterprise',
+        meta: {
+          title: 'business_customer-enterprise',
+          i18nKey: 'route.business_customer-enterprise'
+        }
+      },
+      {
         name: 'business_customs-ports',
         path: '/business/customs-ports',
         component: 'view.business_customs-ports',
