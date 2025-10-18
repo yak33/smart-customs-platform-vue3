@@ -238,6 +238,7 @@ const local: App.I18n.Schema = {
     business_countries: 'Countries',
     'business_customs-ports': 'Customs Ports',
     business_hscode: 'HS Code',
+    business_units: 'Units of Measurement',
     exception: 'Exception',
     exception_403: '403',
     exception_404: '404',

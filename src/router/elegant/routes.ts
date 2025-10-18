@@ -101,6 +101,15 @@ export const generatedRoutes: GeneratedRoute[] = [
           title: 'business_hscode',
           i18nKey: 'route.business_hscode'
         }
+      },
+      {
+        name: 'business_units',
+        path: '/business/units',
+        component: 'view.business_units',
+        meta: {
+          title: 'business_units',
+          i18nKey: 'route.business_units'
+        }
       }
     ]
   },

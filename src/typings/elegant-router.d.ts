@@ -31,6 +31,7 @@ declare module "@elegant-router/types" {
     "business_currencies": "/business/currencies";
     "business_customs-ports": "/business/customs-ports";
     "business_hscode": "/business/hscode";
+    "business_units": "/business/units";
     "demo": "/demo";
     "demo_demo": "/demo/demo";
     "demo_tree": "/demo/tree";
@@ -138,6 +139,7 @@ declare module "@elegant-router/types" {
     | "business_currencies"
     | "business_customs-ports"
     | "business_hscode"
+    | "business_units"
     | "demo_demo"
     | "demo_tree"
     | "home"
