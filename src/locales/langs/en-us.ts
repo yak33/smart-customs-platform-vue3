@@ -240,6 +240,7 @@ const local: App.I18n.Schema = {
     business_hscode: 'HS Code',
     business_units: 'Units of Measurement',
     'business_customer-enterprise': 'Customer Enterprise',
+    business_goods: 'Goods Management',
     exception: 'Exception',
     exception_403: '403',
     exception_404: '404',

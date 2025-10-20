@@ -103,6 +103,15 @@ export const generatedRoutes: GeneratedRoute[] = [
         }
       },
       {
+        name: 'business_goods',
+        path: '/business/goods',
+        component: 'view.business_goods',
+        meta: {
+          title: 'business_goods',
+          i18nKey: 'route.business_goods'
+        }
+      },
+      {
         name: 'business_hscode',
         path: '/business/hscode',
         component: 'view.business_hscode',
