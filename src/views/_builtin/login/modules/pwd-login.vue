@@ -2,12 +2,18 @@
 import { computed, reactive, ref } from 'vue';
 import type { SelectOption } from 'naive-ui';
 import { useLoading } from '@sa/hooks';
+import CryptoJS from 'crypto-js';
 import { fetchCaptchaCode, fetchTenantList } from '@/service/api';
+import { fetchSocialAuthBinding } from '@/service/api/system';
 import { useAuthStore } from '@/store/modules/auth';
 import { useRouterPush } from '@/hooks/common/router';
 import { useFormRules, useNaiveForm } from '@/hooks/common/form';
 import { localStg } from '@/utils/storage';
+import { decryptWithAes, encryptWithAes } from '@/utils/crypto';
 import { $t } from '@/locales';
+
+const aesKey = CryptoJS.enc.Utf8.parse(import.meta.env.VITE_REMEMBER_ME_AES_KEY || 'pC4aO6cD2uU7hA0bK6iD4vE1mV8sU8xG');
+
 defineOptions({
   name: 'PwdLogin'
 });
@@ -32,6 +38,7 @@ const model: Api.Auth.PwdLoginForm = reactive({
   username: 'admin',
   password: 'admin123'
 });
+
 type RuleKey = Extract<keyof Api.Auth.PwdLoginForm, 'username' | 'password' | 'code' | 'tenantId'>;
 
 const rules = computed<Record<RuleKey, App.Global.FormRule[]>>(() => {
@@ -47,6 +54,7 @@ const rules = computed<Record<RuleKey, App.Global.FormRule[]>>(() => {
 
   return loginRules;
 });
+
 async function handleFetchTenantList() {
   startTenantLoading();
   const { data, error } = await fetchTenantList();
@@ -70,7 +78,7 @@ async function handleSubmit() {
   // 勾选了需要记住密码设置在 localStorage 中设置记住用户名和密码
   if (remberMe.value) {
     const { tenantId, username, password } = model;
-    localStg.set('loginRember', { tenantId, username, password });
+    localStg.set('loginRember', encryptWithAes(JSON.stringify({ tenantId, username, password }), aesKey));
   } else {
     // 否则移除
     localStg.remove('loginRember');
@@ -78,7 +86,7 @@ async function handleSubmit() {
   try {
     await authStore.login(model);
   } catch {
-    await handleFetchCaptchaCode();
+    handleFetchCaptchaCode();
   }
 }
 
@@ -100,8 +108,10 @@ handleFetchCaptchaCode();
 function handleLoginRember() {
   const loginRember = localStg.get('loginRember');
   if (!loginRember) return;
-  remberMe.value = true;
-  Object.assign(model, loginRember);
+  try {
+    remberMe.value = true;
+    Object.assign(model, JSON.parse(decryptWithAes(loginRember, aesKey)));
+  } catch {}
 }
 
 handleLoginRember();
@@ -113,12 +123,18 @@ handleLoginRember();
 // }
 
 // handleRegister();
+
+async function handleSocialLogin(type: Api.System.SocialSource) {
+  const { data, error } = await fetchSocialAuthBinding(type, model.tenantId);
+  if (error) return;
+  window.location.href = data;
+}
 </script>
 
 <template>
   <div>
-    <div class="mb-12px text-20px text-black font-500 sm:text-24px dark:text-white">登录到您的账户</div>
-    <div class="pb-20px text-14px text-#858585">欢迎回来！请输入您的账户信息</div>
+    <div class="mb-5px text-32px text-black font-600 dark:text-white">登录到您的账户</div>
+    <div class="pb-18px text-16px text-#858585">欢迎回来！请输入您的账户信息</div>
     <NForm
       ref="formRef"
       :model="model"
@@ -149,18 +165,18 @@ handleLoginRember();
       <NFormItem v-if="captchaEnabled" path="code">
         <div class="w-full flex-y-center gap-16px">
           <NInput v-model:value="model.code" :placeholder="$t('page.login.common.codePlaceholder')" />
-          <NSpin :show="codeLoading" :size="24" class="h-40px">
-            <NButton :focusable="false" class="login-code h-40px w-120px" @click="handleFetchCaptchaCode">
+          <NSpin :show="codeLoading" :size="28" class="h-42px">
+            <NButton :focusable="false" class="login-code h-42px w-136px" @click="handleFetchCaptchaCode">
               <img v-if="codeUrl" :src="codeUrl" />
               <NEmpty v-else :show-icon="false" description="暂无验证码" />
             </NButton>
           </NSpin>
         </div>
       </NFormItem>
-      <NSpace vertical :size="16" class="mb-8px">
-        <div class="mx-6px mb-10px flex-y-center justify-between">
+      <NSpace vertical :size="12" class="mb-8px">
+        <div class="mx-6px mb-8px flex-y-center justify-between">
           <NCheckbox v-model:checked="remberMe" size="large">{{ $t('page.login.pwdLogin.rememberMe') }}</NCheckbox>
-          <NA type="primary" class="text-14px" @click="toggleLoginModule('reset-pwd')">
+          <NA type="primary" class="text-18px" @click="toggleLoginModule('reset-pwd')">
             {{ $t('page.login.pwdLogin.forgetPassword') }}
           </NA>
         </div>
@@ -173,9 +189,28 @@ handleLoginRember();
       </NSpace>
     </NForm>
 
-    <div class="mt-24px w-full text-center text-14px text-#858585">
+    <NDivider>
+      <div class="color-#858585">{{ $t('page.login.pwdLogin.otherAccountLogin') }}</div>
+    </NDivider>
+
+    <div class="w-full flex-y-center gap-16px">
+      <NButton class="flex-1" @click="handleSocialLogin('gitee')">
+        <template #icon>
+          <icon-simple-icons-gitee class="color-#c71d23" />
+        </template>
+        <span class="ml-6px">Gitee</span>
+      </NButton>
+      <NButton class="flex-1" @click="handleSocialLogin('github')">
+        <template #icon>
+          <icon-mdi-github class="color-#010409" />
+        </template>
+        <span class="ml-6px">GitHub</span>
+      </NButton>
+    </div>
+
+    <div class="mt-24px w-full text-center text-18px text-#858585">
       您还没有账户？
-      <NA type="primary" class="text-14px" @click="toggleLoginModule('register')">
+      <NA type="primary" class="text-18px" @click="toggleLoginModule('register')">
         {{ $t('page.login.common.register') }}
       </NA>
     </div>
@@ -190,15 +225,15 @@ handleLoginRember();
   }
 
   img {
-    height: 40px;
+    height: 42px;
   }
 }
 
 :deep(.n-base-selection),
 :deep(.n-input) {
-  --n-height: 40px !important;
-  --n-font-size: 14px !important;
-  --n-border-radius: 6px !important;
+  --n-height: 42px !important;
+  --n-font-size: 16px !important;
+  --n-border-radius: 8px !important;
 }
 
 :deep(.n-base-selection-label) {
@@ -206,13 +241,18 @@ handleLoginRember();
 }
 
 :deep(.n-checkbox) {
-  --n-size: 16px !important;
-  --n-font-size: 14px !important;
+  --n-size: 18px !important;
+  --n-font-size: 16px !important;
 }
 
 :deep(.n-button) {
-  --n-height: 40px !important;
+  --n-height: 42px !important;
+  --n-font-size: 18px !important;
+  --n-border-radius: 8px !important;
+}
+
+:deep(.n-divider) {
   --n-font-size: 16px !important;
-  --n-border-radius: 6px !important;
+  --n-font-weight: 400 !important;
 }
 </style>

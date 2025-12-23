@@ -1,7 +1,8 @@
 <script setup lang="tsx">
 import { computed, ref } from 'vue';
+import { useRoute } from 'vue-router';
 import type { TreeOption } from 'naive-ui';
-import { NDivider, NTooltip } from 'naive-ui';
+import { NDivider, NEllipsis, NTooltip } from 'naive-ui';
 import { useBoolean, useLoading } from '@sa/hooks';
 import {
   fetchBatchDeleteDictData,
@@ -11,10 +12,11 @@ import {
   fetchRefreshCache
 } from '@/service/api/system';
 import { useAppStore } from '@/store/modules/app';
-import { useTable, useTableOperate } from '@/hooks/common/table';
+import { defaultTransform, useNaivePaginatedTable, useTableOperate } from '@/hooks/common/table';
 import { useDict } from '@/hooks/business/dict';
 import { useAuth } from '@/hooks/business/auth';
 import { useDownload } from '@/hooks/business/download';
+import { handleCopy } from '@/utils/copy';
 import ButtonIcon from '@/components/custom/button-icon.vue';
 import { $t } from '@/locales';
 import DictTag from '@/components/custom/dict-tag.vue';
@@ -31,137 +33,146 @@ useDict('sys_user_sex');
 const { hasAuth } = useAuth();
 const appStore = useAppStore();
 const { download } = useDownload();
+const route = useRoute();
 
+const selectedKeys = ref<string[]>([]);
 const dictTypeData = ref<Api.System.DictType>();
 const dictOperateType = ref<NaiveUI.TableOperateType>('add');
 const { bool: dictTypeDrawerVisible, setTrue: openDictTypeDrawer } = useBoolean();
-const { columns, columnChecks, data, getData, getDataByPage, loading, mobilePagination, searchParams } = useTable({
-  apiFn: fetchGetDictDataList,
-  apiParams: {
-    pageNum: 1,
-    pageSize: 10,
-    // if you want to use the searchParams in Form, you need to define the following properties, and the value is null
-    // the value can not be undefined, otherwise the property in Form will not be reactive
-    dictLabel: null,
-    dictType: null
-  },
-  columns: () => [
-    {
-      type: 'selection',
-      align: 'center',
-      width: 48
-    },
-    {
-      key: 'dictLabel',
-      title: $t('page.system.dict.data.label'),
-      align: 'center',
-      minWidth: 80,
-      resizable: true,
-      ellipsis: {
-        tooltip: true
-      },
-      render(row) {
-        return <DictTag size="small" dictData={row} />;
-      }
-    },
-    {
-      key: 'dictValue',
-      title: $t('page.system.dict.data.value'),
-      align: 'center',
-      minWidth: 80,
-      resizable: true,
-      ellipsis: {
-        tooltip: true
-      }
-    },
-    {
-      key: 'dictSort',
-      title: $t('page.system.dict.data.dictSort'),
-      align: 'center',
-      minWidth: 80,
-      resizable: true,
-      ellipsis: {
-        tooltip: true
-      }
-    },
-    {
-      key: 'remark',
-      title: $t('page.system.dict.data.remark'),
-      align: 'center',
-      minWidth: 80,
-      resizable: true,
-      ellipsis: {
-        tooltip: true
-      }
-    },
-    {
-      key: 'createTime',
-      title: $t('page.system.dict.data.createTime'),
-      align: 'center',
-      minWidth: 80,
-      resizable: true,
-      ellipsis: {
-        tooltip: true
-      }
-    },
-    {
-      key: 'operate',
-      title: $t('common.operate'),
-      align: 'center',
-      width: 160,
-      render: row => {
-        const divider = () => {
-          if (!hasAuth('system:dict:edit') || !hasAuth('system:dict:remove')) {
-            return null;
-          }
-          return <NDivider vertical />;
-        };
 
-        const editBtn = () => {
-          if (!hasAuth('system:dict:edit')) {
-            return null;
-          }
-          return (
-            <ButtonIcon
-              text
-              type="primary"
-              icon="material-symbols:drive-file-rename-outline-outline"
-              tooltipContent={$t('common.edit')}
-              onClick={() => edit(row.dictCode!)}
-            />
-          );
-        };
-
-        const deleteBtn = () => {
-          if (!hasAuth('system:dict:remove')) {
-            return null;
-          }
-          return (
-            <ButtonIcon
-              text
-              type="error"
-              icon="material-symbols:delete-outline"
-              tooltipContent={$t('common.delete')}
-              popconfirmContent={$t('common.confirmDelete')}
-              onPositiveClick={() => handleDelete(row.dictCode!)}
-            />
-          );
-        };
-
-        return (
-          <div class="flex-center gap-8px">
-            {editBtn()}
-            {divider()}
-            {deleteBtn()}
-          </div>
-        );
-      }
-    }
-  ]
+const searchParams = ref<Api.System.DictDataSearchParams>({
+  pageNum: 1,
+  pageSize: 10,
+  dictLabel: null,
+  dictType: null,
+  params: {}
 });
 
+const { columns, columnChecks, data, getData, getDataByPage, loading, mobilePagination, scrollX } =
+  useNaivePaginatedTable({
+    api: () => fetchGetDictDataList(searchParams.value),
+    transform: response => defaultTransform(response),
+    onPaginationParamsChange: params => {
+      searchParams.value.pageNum = params.page;
+      searchParams.value.pageSize = params.pageSize;
+    },
+    columns: () => [
+      {
+        type: 'selection',
+        align: 'center',
+        width: 48
+      },
+      {
+        key: 'dictLabel',
+        title: $t('page.system.dict.data.label'),
+        align: 'center',
+        minWidth: 80,
+        resizable: true,
+        ellipsis: {
+          tooltip: true
+        },
+        render(row) {
+          return <DictTag size="small" dictData={row} />;
+        }
+      },
+      {
+        key: 'dictValue',
+        title: $t('page.system.dict.data.value'),
+        align: 'center',
+        minWidth: 80,
+        resizable: true,
+        ellipsis: {
+          tooltip: true
+        }
+      },
+      {
+        key: 'dictSort',
+        title: $t('page.system.dict.data.dictSort'),
+        align: 'center',
+        minWidth: 80,
+        resizable: true,
+        ellipsis: {
+          tooltip: true
+        }
+      },
+      {
+        key: 'remark',
+        title: $t('page.system.dict.data.remark'),
+        align: 'center',
+        minWidth: 80,
+        resizable: true,
+        ellipsis: {
+          tooltip: true
+        }
+      },
+      {
+        key: 'createTime',
+        title: $t('page.system.dict.data.createTime'),
+        align: 'center',
+        minWidth: 80,
+        resizable: true,
+        ellipsis: {
+          tooltip: true
+        }
+      },
+      {
+        key: 'operate',
+        title: $t('common.operate'),
+        align: 'center',
+        width: 160,
+        render: row => {
+          const divider = () => {
+            if (!hasAuth('system:dict:edit') || !hasAuth('system:dict:remove')) {
+              return null;
+            }
+            return <NDivider vertical />;
+          };
+
+          const editBtn = () => {
+            if (!hasAuth('system:dict:edit')) {
+              return null;
+            }
+            return (
+              <ButtonIcon
+                text
+                type="primary"
+                icon="material-symbols:drive-file-rename-outline-outline"
+                tooltipContent={$t('common.edit')}
+                onClick={() => edit(row.dictCode!)}
+              />
+            );
+          };
+
+          const deleteBtn = () => {
+            if (!hasAuth('system:dict:remove')) {
+              return null;
+            }
+            return (
+              <ButtonIcon
+                text
+                type="error"
+                icon="material-symbols:delete-outline"
+                tooltipContent={$t('common.delete')}
+                popconfirmContent={$t('common.confirmDelete')}
+                onPositiveClick={() => handleDelete(row.dictCode!)}
+              />
+            );
+          };
+
+          return (
+            <div class="flex-center gap-8px">
+              {editBtn()}
+              {divider()}
+              {deleteBtn()}
+            </div>
+          );
+        }
+      }
+    ]
+  });
+
 const { drawerVisible, operateType, editingData, handleAdd, handleEdit, checkedRowKeys, onBatchDeleted, onDeleted } =
-  useTableOperate(data, getData);
+  useTableOperate(data, 'dictCode', getData);
 
 async function handleBatchDelete() {
   // request
@@ -178,15 +189,16 @@ async function handleDelete(dictCode: CommonType.IdType) {
 }
 
 async function edit(dictCode: CommonType.IdType) {
-  handleEdit('dictCode', dictCode);
+  handleEdit(dictCode);
 }
 
 async function handleExport() {
-  download('/system/dict/data/export', searchParams, `字典数据_${new Date().getTime()}.xlsx`);
+  download('/system/dict/data/export', searchParams.value, `字典数据_${new Date().getTime()}.xlsx`);
 }
 
-async function handleReset() {
-  searchParams.dictLabel = null;
+async function handleResetSearch() {
+  searchParams.value.dictLabel = null;
+  selectedKeys.value = [];
   await getDataByPage();
 }
 
@@ -212,6 +224,7 @@ async function getTreeData() {
   const { data: tree, error } = await fetchGetDictTypeOption();
   if (!error) {
     dictData.value = tree;
+    handleClickTree(route.query.dictType ? [route.query.dictType as string] : []);
   }
   endTreeLoading();
 }
@@ -219,13 +232,16 @@ async function getTreeData() {
 getTreeData();
 
 function handleClickTree(keys: string[]) {
-  searchParams.dictType = keys.length ? keys[0] : null;
+  const dictType = keys.length ? keys[0] : null;
+  selectedKeys.value = keys;
+  searchParams.value.dictType = dictType;
+  window.history.pushState(null, '', `${route.path}${dictType ? `?dictType=${dictType}` : ''}`);
   checkedRowKeys.value = [];
   getDataByPage();
 }
 
 function handleResetTreeData() {
-  dictPattern.value = undefined;
+  dictPattern.value = '';
   getTreeData();
 }
 
@@ -299,11 +315,29 @@ async function handleDeleteType(dictType: Api.System.DictType) {
 }
 
 async function handleExportType() {
-  download('/system/dict/type/export', searchParams, `${$t('page.system.dict.dictType')}_${new Date().getTime()}.xlsx`);
+  download(
+    '/system/dict/type/export',
+    searchParams.value,
+    `${$t('page.system.dict.dictType')}_${new Date().getTime()}.xlsx`
+  );
 }
 
 const selectable = computed(() => {
   return !loading.value;
+});
+
+const tableTitle = computed(() => {
+  const dictType = dictData.value.find(item => item.dictType === searchParams.value.dictType);
+  return dictType ? (
+    <NEllipsis lineClamp={2} class="flex">
+      <span>{dictType.dictName}</span>
+      <span class="cursor-copy" onClick={async () => await handleCopy(dictType.dictType)}>
+        {` (${dictType.dictType} )`}
+      </span>
+    </NEllipsis>
+  ) : (
+    <div>{$t('page.system.dict.title')}</div>
+  );
 });
 </script>
 
@@ -338,6 +372,7 @@ const selectable = computed(() => {
       <NInput v-model:value="dictPattern" clearable :placeholder="$t('common.keywordSearch')" />
       <NSpin class="dict-tree" :show="treeLoading">
         <NTree
+          v-model:selected-keys="selectedKeys"
           block-node
           show-line
           :data="dictData as []"
@@ -360,9 +395,9 @@ const selectable = computed(() => {
       </NSpin>
     </template>
     <div class="h-full flex-col-stretch gap-12px overflow-hidden lt-sm:overflow-auto">
-      <DictDataSearch v-model:model="searchParams" @reset="handleReset" @search="getDataByPage" />
+      <DictDataSearch v-model:model="searchParams" @reset="handleResetSearch" @search="getDataByPage" />
       <TableRowCheckAlert v-model:checked-row-keys="checkedRowKeys" />
-      <NCard :title="$t('page.system.dict.title')" :bordered="false" size="small" class="card-wrapper sm:flex-1-hidden">
+      <NCard :title="() => tableTitle" :bordered="false" size="small" class="card-wrapper sm:flex-1-hidden">
         <template #header-extra>
           <TableHeaderOperation
             v-model:columns="columnChecks"
@@ -380,7 +415,7 @@ const selectable = computed(() => {
             <template #prefix>
               <NButton ghost size="small" @click="handleRefreshCache">
                 <template #icon>
-                  <icon-material-symbols:refresh-rounded class="text-icon" />
+                  <icon-material-symbols-refresh-rounded class="text-icon" />
                 </template>
                 {{ $t('page.system.dict.refreshCache') }}
               </NButton>
@@ -393,7 +428,7 @@ const selectable = computed(() => {
           :data="data"
           size="small"
           :flex-height="!appStore.isMobile"
-          :scroll-x="962"
+          :scroll-x="scrollX"
           :loading="loading"
           remote
           :row-key="row => row.dictCode"
@@ -479,6 +514,6 @@ const selectable = computed(() => {
 }
 
 :deep(.n-card-header__main) {
-  min-width: 69px !important;
+  min-width: 180px !important;
 }
 </style>

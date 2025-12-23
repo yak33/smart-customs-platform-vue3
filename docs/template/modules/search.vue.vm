@@ -1,0 +1,130 @@
+#set($ModuleName=$moduleName.substring(0, 1).toUpperCase() + $moduleName.substring(1))
+<script setup lang="ts">
+import { toRaw } from 'vue';
+import { jsonClone } from '@sa/utils';
+import { useNaiveForm } from '@/hooks/common/form';
+import { $t } from '@/locales';
+
+defineOptions({
+  name: '${BusinessName}Search'
+});
+
+interface Emits {
+  (e: 'search'): void;
+}
+
+const emit = defineEmits<Emits>();
+
+const { validate, restoreValidation } = useNaiveForm();
+
+#foreach ($column in $columns)
+    #if($column.htmlType == "datetime" && $column.queryType == "BETWEEN")
+        #set($AttrName=$column.javaField.substring(0,1).toUpperCase() + ${column.javaField.substring(1)})
+const dateRange${AttrName} = ref<[string, string] | null>(null);
+#end#end
+const model = defineModel<Api.$ModuleName.${BusinessName}SearchParams>('model', { required: true });
+
+const defaultModel = jsonClone(toRaw(model.value));
+
+function resetModel() {
+  #foreach ($column in $columns)
+    #if($column.htmlType == "datetime" && $column.queryType == "BETWEEN")
+        #set($AttrName=$column.javaField.substring(0,1).toUpperCase() + ${column.javaField.substring(1)})
+  dateRange${AttrName}.value = null;
+    #end
+#end
+  Object.assign(model.value, defaultModel);
+}
+
+async function reset() {
+  await restoreValidation();
+  resetModel();
+  emit('search');
+}
+
+async function search() {
+  await validate();
+#foreach ($column in $columns)
+    #if($column.htmlType == "datetime" && $column.queryType == "BETWEEN")
+        #set($AttrName=$column.javaField.substring(0,1).toUpperCase() + ${column.javaField.substring(1)})
+  if (dateRange${AttrName}.value?.length) {
+    model.value.params!.begin${AttrName} = dateRange${AttrName}.value[0];
+    model.value.params!.end${AttrName} = dateRange${AttrName}.value[1];
+  }
+    #end
+#end
+  emit('search');
+}
+</script>
+
+<template>
+  <NCard :bordered="false" size="small" class="card-wrapper">
+    <NCollapse>
+      <NCollapseItem :title="$t('common.search')" name="$moduleName-${business__name}-search">
+        <NForm :model="model" label-placement="left" :label-width="80">
+          <NGrid responsive="screen" item-responsive>
+#set($immediateDictList = [])
+#foreach($column in $columns)
+#if($column.query)
+#set($AttrName=$column.javaField.substring(0,1).toUpperCase() + ${column.javaField.substring(1)})
+            <NFormItemGi span="24 s:12 m:6" label="$column.columnComment" label-width="auto" path="$column.javaField" class="pr-24px">
+            #if($!StrUtil.contains("select, radio, checkbox", $column.htmlType) && $column.dictType)
+              <DictSelect
+                v-model:value="model.$column.javaField"
+                placeholder="请选择$column.columnComment"
+                dict-code="$column.dictType"
+                clearable
+#if(!$column.isList() && !$immediateDictList.contains($column.dictType))#set($void = $immediateDictList.add($column.dictType))
+                immediate
+#end
+              />
+            #elseif($!StrUtil.contains("select, radio, checkbox", $column.htmlType))
+              <NSelect
+                v-model:value="model.$column.javaField"
+                placeholder="请选择$column.columnComment"
+                :options="[]"
+                clearable
+              />
+            #elseif($column.htmlType == 'datetime' && $column.queryType != "BETWEEN")
+              <NDatePicker
+                v-model:formatted-value="model.$column.javaField"
+                type="datetime"
+                value-format="yyyy-MM-dd HH:mm:ss"
+                clearable
+              />
+            #elseif($column.htmlType == 'datetime' && $column.queryType == "BETWEEN")
+              <NDatePicker
+                v-model:formatted-value="dateRange${AttrName}"
+                type="datetimerange"
+                value-format="yyyy-MM-dd HH:mm:ss"
+                clearable
+              />
+#else              <NInput v-model:value="model.$column.javaField" placeholder="请输入$column.columnComment" />
+    #end
+            </NFormItemGi>
+  #end
+#end
+            <NFormItemGi :show-feedback="false" span="24" class="pr-24px">
+              <NSpace class="w-full" justify="end">
+                <NButton @click="reset">
+                  <template #icon>
+                    <icon-ic-round-refresh class="text-icon" />
+                  </template>
+                  {{ $t('common.reset') }}
+                </NButton>
+                <NButton type="primary" ghost @click="search">
+                  <template #icon>
+                    <icon-ic-round-search class="text-icon" />
+                  </template>
+                  {{ $t('common.search') }}
+                </NButton>
+              </NSpace>
+            </NFormItemGi>
+          </NGrid>
+        </NForm>
+      </NCollapseItem>
+    </NCollapse>
+  </NCard>
+</template>
+
+<style scoped></style>

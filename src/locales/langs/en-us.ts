@@ -82,93 +82,172 @@ const local: App.I18n.Schema = {
     tokenExpired: 'The requested token has expired'
   },
   theme: {
-    themeSchema: {
-      title: 'Theme Schema',
-      light: 'Light',
-      dark: 'Dark',
-      auto: 'Follow System'
+    themeDrawerTitle: 'Theme Configuration',
+    tabs: {
+      appearance: 'Appearance',
+      layout: 'Layout',
+      general: 'General',
+      preset: 'Preset'
     },
-    grayscale: 'Grayscale',
-    colourWeakness: 'Colour Weakness',
-    layoutMode: {
-      title: 'Layout Mode',
-      vertical: 'Vertical Menu Mode',
-      horizontal: 'Horizontal Menu Mode',
-      'vertical-mix': 'Vertical Mix Menu Mode',
-      'horizontal-mix': 'Horizontal Mix menu Mode',
-      reverseHorizontalMix: 'Reverse first level menus and child level menus position'
-    },
-    recommendColor: 'Apply Recommended Color Algorithm',
-    recommendColorDesc: 'The recommended color algorithm refers to',
-    themeColor: {
-      title: 'Theme Color',
-      primary: 'Primary',
-      info: 'Info',
-      success: 'Success',
-      warning: 'Warning',
-      error: 'Error',
-      followPrimary: 'Follow Primary'
-    },
-    scrollMode: {
-      title: 'Scroll Mode',
-      wrapper: 'Wrapper',
-      content: 'Content'
-    },
-    page: {
-      animate: 'Page Animate',
-      mode: {
-        title: 'Page Animate Mode',
-        fade: 'Fade',
-        'fade-slide': 'Slide',
-        'fade-bottom': 'Fade Zoom',
-        'fade-scale': 'Fade Scale',
-        'zoom-fade': 'Zoom Fade',
-        'zoom-out': 'Zoom Out',
-        none: 'None'
+    appearance: {
+      themeSchema: {
+        title: 'Theme Schema',
+        light: 'Light',
+        dark: 'Dark',
+        auto: 'Follow System'
+      },
+      grayscale: 'Grayscale',
+      colourWeakness: 'Colour Weakness',
+      themeColor: {
+        title: 'Theme Color',
+        primary: 'Primary',
+        info: 'Info',
+        success: 'Success',
+        warning: 'Warning',
+        error: 'Error',
+        followPrimary: 'Follow Primary'
+      },
+      themeRadius: {
+        title: 'Theme Radius'
+      },
+      recommendColor: 'Apply Recommended Color Algorithm',
+      recommendColorDesc: 'The recommended color algorithm refers to',
+      preset: {
+        title: 'Theme Presets',
+        apply: 'Apply',
+        applySuccess: 'Preset applied successfully',
+        default: {
+          name: 'Default Preset',
+          desc: 'Default theme preset with balanced settings'
+        },
+        soybean: {
+          name: 'Soybean',
+          desc: 'Default theme preset of SoybeanAdmin'
+        },
+        dark: {
+          name: 'Dark Preset',
+          desc: 'Dark theme preset for night time usage'
+        },
+        compact: {
+          name: 'Compact Preset',
+          desc: 'Compact layout preset for small screens'
+        },
+        azir: {
+          name: "Azir's Preset",
+          desc: 'It is a cold and elegant preset that Azir likes'
+        }
       }
     },
-    fixedHeaderAndTab: 'Fixed Header And Tab',
-    header: {
-      height: 'Header Height',
-      breadcrumb: {
-        visible: 'Breadcrumb Visible',
-        showIcon: 'Breadcrumb Icon Visible'
+    layout: {
+      layoutMode: {
+        title: 'Layout Mode',
+        vertical: 'Vertical Mode',
+        horizontal: 'Horizontal Mode',
+        'vertical-mix': 'Vertical Mix Mode',
+        'vertical-hybrid-header-first': 'Left Hybrid Header-First',
+        'top-hybrid-sidebar-first': 'Top-Hybrid Sidebar-First',
+        'top-hybrid-header-first': 'Top-Hybrid Header-First',
+        vertical_detail: 'Vertical menu layout, with the menu on the left and content on the right.',
+        'vertical-mix_detail':
+          'Vertical mix-menu layout, with the primary menu on the dark left side and the secondary menu on the lighter left side.',
+        'vertical-hybrid-header-first_detail':
+          'Left hybrid layout, with the primary menu at the top, the secondary menu on the dark left side, and the tertiary menu on the lighter left side.',
+        horizontal_detail: 'Horizontal menu layout, with the menu at the top and content below.',
+        'top-hybrid-sidebar-first_detail':
+          'Top hybrid layout, with the primary menu on the left and the secondary menu at the top.',
+        'top-hybrid-header-first_detail':
+          'Top hybrid layout, with the primary menu at the top and the secondary menu on the left.'
+      },
+      tab: {
+        title: 'Tab Settings',
+        visible: 'Tab Visible',
+        cache: 'Tag Bar Info Cache',
+        cacheTip: 'One-click to open/close global keepalive',
+        height: 'Tab Height',
+        mode: {
+          title: 'Tab Mode',
+          slider: 'Slider',
+          chrome: 'Chrome',
+          button: 'Button'
+        },
+        closeByMiddleClick: 'Close Tab by Middle Click',
+        closeByMiddleClickTip: 'Enable closing tabs by clicking with the middle mouse button'
+      },
+      header: {
+        title: 'Header Settings',
+        height: 'Header Height',
+        breadcrumb: {
+          visible: 'Breadcrumb Visible',
+          showIcon: 'Breadcrumb Icon Visible'
+        }
+      },
+      sider: {
+        title: 'Sider Settings',
+        inverted: 'Dark Sider',
+        width: 'Sider Width',
+        collapsedWidth: 'Sider Collapsed Width',
+        mixWidth: 'Mix Sider Width',
+        mixCollapsedWidth: 'Mix Sider Collapse Width',
+        mixChildMenuWidth: 'Mix Child Menu Width',
+        autoSelectFirstMenu: 'Auto Select First Submenu',
+        autoSelectFirstMenuTip:
+          'When a first-level menu is clicked, the first submenu is automatically selected and navigated to the deepest level'
+      },
+      footer: {
+        title: 'Footer Settings',
+        visible: 'Footer Visible',
+        fixed: 'Fixed Footer',
+        height: 'Footer Height',
+        right: 'Right Footer'
+      },
+      content: {
+        title: 'Content Area Settings',
+        scrollMode: {
+          title: 'Scroll Mode',
+          tip: 'The theme scroll only scrolls the main part, the outer scroll can carry the header and footer together',
+          wrapper: 'Wrapper',
+          content: 'Content'
+        },
+        page: {
+          animate: 'Page Animate',
+          mode: {
+            title: 'Page Animate Mode',
+            fade: 'Fade',
+            'fade-slide': 'Slide',
+            'fade-bottom': 'Fade Zoom',
+            'fade-scale': 'Fade Scale',
+            'zoom-fade': 'Zoom Fade',
+            'zoom-out': 'Zoom Out',
+            none: 'None'
+          }
+        },
+        fixedHeaderAndTab: 'Fixed Header And Tab'
+      }
+    },
+    general: {
+      title: 'General Settings',
+      watermark: {
+        title: 'Watermark Settings',
+        visible: 'Watermark Full Screen Visible',
+        text: 'Custom Watermark Text',
+        enableUserName: 'Enable User Name Watermark',
+        enableTime: 'Show Current Time',
+        timeFormat: 'Time Format'
       },
       multilingual: {
+        title: 'Multilingual Settings',
         visible: 'Display multilingual button'
       },
       globalSearch: {
+        title: 'Global Search Settings',
         visible: 'Display GlobalSearch button'
       }
     },
-    tab: {
-      visible: 'Tab Visible',
-      cache: 'Tag Bar Info Cache',
-      height: 'Tab Height',
-      mode: {
-        title: 'Tab Mode',
-        chrome: 'Chrome',
-        button: 'Button'
-      }
-    },
-    sider: {
-      inverted: 'Dark Sider',
-      width: 'Sider Width',
-      collapsedWidth: 'Sider Collapsed Width',
-      mixWidth: 'Mix Sider Width',
-      mixCollapsedWidth: 'Mix Sider Collapse Width',
-      mixChildMenuWidth: 'Mix Child Menu Width'
-    },
-    footer: {
-      visible: 'Footer Visible',
-      fixed: 'Fixed Footer',
-      height: 'Footer Height',
-      right: 'Right Footer'
-    },
-    watermark: {
-      visible: 'Watermark Full Screen Visible',
-      text: 'Watermark Text',
-      enableUserName: 'Enable User Name Watermark'
+    configOperation: {
+      copyConfig: 'Copy Config',
+      copySuccessMsg: 'Copy Success, Please replace the variable "themeSettings" in "src/theme/settings.ts"',
+      resetConfig: 'Reset Config',
+      resetSuccessMsg: 'Reset Success'
     },
     tablePropsTitle: 'Table Props',
     table: {
@@ -183,19 +262,6 @@ const local: App.I18n.Schema = {
       singleColumn: 'Single Column',
       singleLine: 'Single Line',
       striped: 'Striped'
-    },
-    themeDrawerTitle: 'Theme Configuration',
-    pageFunTitle: 'Page Function',
-    resetCacheStrategy: {
-      title: 'Reset Cache Strategy',
-      close: 'Close Page',
-      refresh: 'Refresh Page'
-    },
-    configOperation: {
-      copyConfig: 'Copy Config',
-      copySuccessMsg: 'Copy Success, Please replace the variable "themeSettings" in "src/theme/settings.ts"',
-      resetConfig: 'Reset Config',
-      resetSuccessMsg: 'Reset Success'
     }
   },
   route: {
@@ -206,45 +272,36 @@ const local: App.I18n.Schema = {
     'iframe-page': 'Iframe',
     home: 'Home',
     system: 'System Management',
-    system_menu: 'Menu Management',
-    tool: 'System Tools',
-    tool_gen: 'Code Generation',
     system_user: 'User Management',
-    system_dict: 'Dict Management',
-    system_tenant: 'Tenant Management',
-    'system_tenant-package': 'Tenant Package Management',
-    system_config: 'Config Management',
+    system_role: 'Role Management',
+    system_menu: 'Menu Management',
     system_dept: 'Dept Management',
     system_post: 'Post Management',
-    monitor: 'Monitor Management',
-    monitor_logininfor: 'Login Log',
-    monitor_operlog: 'Operate Log',
-    system_client: 'Client Management',
+    system_dict: 'Dict Management',
+    system_config: 'Config Management',
     system_notice: 'Notice Management',
-    'social-callback': 'Social Callback',
     system_oss: 'File Management',
     'system_oss-config': 'OSS Config',
+    system_client: 'Client Management',
+    system_tenant: 'Tenant Management',
+    'system_tenant-package': 'Tenant Package Management',
+    monitor: 'Monitor',
+    monitor_logininfor: 'Login Log',
+    monitor_operlog: 'Operate Log',
     monitor_cache: 'Cache Monitor',
     monitor_online: 'Online User',
     'user-center': 'User Center',
-    system_role: 'Role Management',
+    'social-callback': 'Social Callback',
     demo: 'Demo',
     demo_demo: 'Demo Table',
     demo_tree: 'Demo Tree',
-    business: 'Trade Compliance Library',
-    'business_china-ports': 'Ports',
-    business_cityports: 'City Ports',
-    business_currencies: 'Currencies',
-    business_countries: 'Countries',
-    'business_customs-ports': 'Customs Ports',
-    business_hscode: 'HS Code',
-    business_units: 'Units of Measurement',
-    'business_customer-enterprise': 'Customer Enterprise',
-    business_goods: 'Goods Management',
     exception: 'Exception',
     exception_403: '403',
     exception_404: '404',
-    exception_500: '500'
+    exception_500: '500',
+    tool: 'System Tools',
+    tool_gen: 'Code Generation',
+    about: 'About'
   },
   menu: {
     system_tenant: 'Tenant Management',
@@ -679,6 +736,7 @@ const local: App.I18n.Schema = {
         perms: 'Permission Code',
         component: 'Component Path',
         path: 'Route Path',
+        layout: 'Layout',
         externalPath: 'External Path',
         query: 'Route Parameters',
         iframeQuery: 'Iframe Address',
@@ -706,6 +764,8 @@ const local: App.I18n.Schema = {
           'The component path to access, such as: `system/user/index`, which is in the `views` directory by default',
         pathTip:
           'Router path，Example：`user`，If the external network address needs to be accessed in the internal link,then  `http(s)://` beginning',
+        layoutTip:
+          'Default Layout: A layout that includes common sections such as the global header, sidebar, footer, etc;\nBlank Layout: A layout without any common sections, typically used for pages like the login page',
         form: {
           parentId: {
             required: 'Please select Parent Menu',
@@ -1147,6 +1207,20 @@ const local: App.I18n.Schema = {
         importSuccess: 'Import successful',
         statusChangeSuccess: 'Status modified successfully'
       }
+    },
+    about: {
+      title: 'About',
+      introduction: `RuoYi-Plus-Soybean is a modern, enterprise-level multi-tenant management system. It combines the powerful backend capabilities of RuoYi-Vue-Plus with the modern frontend features of Soybean Admin, providing developers with a complete enterprise management solution.`,
+      projectInfo: {
+        title: 'Project Info',
+        version: 'Version',
+        latestBuildTime: 'Latest Build Time',
+        documentLink: 'Document Link',
+        previewLink: 'Preview Link',
+        repositoryLink: 'Repository Link'
+      },
+      prdDep: 'Production Dependency',
+      devDep: 'Development Dependency'
     }
   },
   form: {
@@ -1181,7 +1255,9 @@ const local: App.I18n.Schema = {
     closeOther: 'Close Other',
     closeLeft: 'Close Left',
     closeRight: 'Close Right',
-    closeAll: 'Close All'
+    closeAll: 'Close All',
+    pin: 'Pin Tab',
+    unpin: 'Unpin Tab'
   },
   icon: {
     themeConfig: 'Theme Configuration',

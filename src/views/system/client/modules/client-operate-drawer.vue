@@ -1,5 +1,6 @@
 <script setup lang="ts">
-import { computed, reactive, watch } from 'vue';
+import { computed, ref, watch } from 'vue';
+import { jsonClone } from '@sa/utils';
 import { fetchCreateClient, fetchUpdateClient } from '@/service/api/system/client';
 import { useFormRules, useNaiveForm } from '@/hooks/common/form';
 import { $t } from '@/locales';
@@ -27,7 +28,7 @@ const visible = defineModel<boolean>('visible', {
   default: false
 });
 
-const { formRef, validate, restoreValidation } = useNaiveForm();
+const { validate, restoreValidation } = useNaiveForm();
 const { createRequiredRule } = useFormRules();
 
 const title = computed(() => {
@@ -40,7 +41,7 @@ const title = computed(() => {
 
 type Model = Api.System.ClientOperateParams;
 
-const model: Model = reactive(createDefaultModel());
+const model = ref<Model>(createDefaultModel());
 
 function createDefaultModel(): Model {
   return {
@@ -70,13 +71,10 @@ const rules: Record<RuleKey, App.Global.FormRule> = {
 };
 
 function handleUpdateModelWhenEdit() {
-  if (props.operateType === 'add') {
-    Object.assign(model, createDefaultModel());
-    return;
-  }
+  model.value = createDefaultModel();
 
   if (props.operateType === 'edit' && props.rowData) {
-    Object.assign(model, props.rowData);
+    Object.assign(model.value, jsonClone(props.rowData));
   }
 }
 
@@ -87,9 +85,11 @@ function closeDrawer() {
 async function handleSubmit() {
   await validate();
 
+  const { id, clientId, clientKey, clientSecret, grantTypeList, deviceType, activeTimeout, timeout, status } =
+    model.value;
+
   // request
   if (props.operateType === 'add') {
-    const { clientKey, clientSecret, grantTypeList, deviceType, activeTimeout, timeout, status } = model;
     const { error } = await fetchCreateClient({
       clientKey,
       clientSecret,
@@ -103,7 +103,6 @@ async function handleSubmit() {
   }
 
   if (props.operateType === 'edit') {
-    const { id, clientId, clientKey, clientSecret, grantTypeList, deviceType, activeTimeout, timeout, status } = model;
     const { error } = await fetchUpdateClient({
       id,
       clientId,
@@ -134,7 +133,7 @@ watch(visible, () => {
 <template>
   <NDrawer v-model:show="visible" :title="title" display-directive="show" :width="800" class="max-w-90%">
     <NDrawerContent :title="title" :native-scrollbar="false" closable>
-      <NForm ref="formRef" :model="model" :rules="rules">
+      <NForm :model="model" :rules="rules">
         <NFormItem v-if="operateType === 'edit'" :label="$t('page.system.client.clientId')" path="clientId">
           <NInput
             v-model:value="model.clientId"

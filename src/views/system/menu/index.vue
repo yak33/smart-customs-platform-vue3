@@ -57,12 +57,13 @@ const getMeunTree = async () => {
   startLoading();
   const { data, error } = await fetchGetMenuList();
   if (error) return;
+  const { tree } = handleTree(data, { idField: 'menuId', filterFn: item => item.menuType !== 'F' });
   treeData.value = [
     {
       menuId: 0,
       menuName: $t('page.system.menu.rootName'),
       icon: 'material-symbols:home-outline-rounded',
-      children: handleTree(data, { idField: 'menuId', filterFn: item => item.menuType !== 'F' })
+      children: tree
     }
   ] as Api.System.Menu[];
   endLoading();
@@ -322,6 +323,18 @@ const btnColumns: DataTableColumns<Api.System.Menu> = [
     }
   }
 ];
+
+function renderMenuName(menuName: string) {
+  return menuName?.startsWith('route.') || menuName?.startsWith('menu.') ? $t(menuName as App.I18n.I18nKey) : menuName;
+}
+
+const renderIframeQuery = (queryParam: string) => {
+  try {
+    return JSON.parse(queryParam || '{}')?.url;
+  } catch {
+    return queryParam;
+  }
+};
 </script>
 
 <template>
@@ -447,25 +460,28 @@ const btnColumns: DataTableColumns<Api.System.Menu> = [
               <DictTag size="small" :value="currentMenu.status" dict-code="sys_normal_disable" />
             </NDescriptionsItem>
             <NDescriptionsItem :label="$t('page.system.menu.menuName')">
-              {{
-                currentMenu.menuName?.startsWith('route.') || currentMenu.menuName?.startsWith('menu.')
-                  ? $t(currentMenu.menuName)
-                  : currentMenu.menuName
-              }}
+              {{ renderMenuName(currentMenu.menuName) }}
             </NDescriptionsItem>
             <NDescriptionsItem v-if="isMenu" :label="$t('page.system.menu.component')">
-              {{ currentMenu.component }}
+              {{
+                currentMenu.component?.startsWith('layout.blank$view.')
+                  ? `${currentMenu.component?.slice(18, currentMenu.component.length)?.replaceAll('_', '/')}/index`
+                  : currentMenu.component
+              }}
             </NDescriptionsItem>
             <NDescriptionsItem
               :label="!isExternalType ? $t('page.system.menu.path') : $t('page.system.menu.externalPath')"
             >
               {{ currentMenu.path }}
             </NDescriptionsItem>
-            <NDescriptionsItem
-              v-if="isMenu && !isExternalType"
-              :label="!isIframeType ? $t('page.system.menu.query') : $t('page.system.menu.iframeQuery')"
-            >
+            <NDescriptionsItem v-if="isMenu && !isExternalType && !isIframeType" :label="$t('page.system.menu.query')">
               {{ currentMenu.queryParam }}
+            </NDescriptionsItem>
+            <NDescriptionsItem
+              v-if="isMenu && !isExternalType && isIframeType"
+              :label="$t('page.system.menu.iframeQuery')"
+            >
+              {{ renderIframeQuery(currentMenu.queryParam) }}
             </NDescriptionsItem>
             <NDescriptionsItem v-if="!isCatalog" :label="$t('page.system.menu.perms')">
               {{ currentMenu.perms }}

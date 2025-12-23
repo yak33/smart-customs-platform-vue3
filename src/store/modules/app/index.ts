@@ -46,10 +46,7 @@ export const useAppStore = defineStore(SetupStoreId.App, () => {
     });
 
     setReloadFlag(true);
-
-    if (themeStore.resetCacheStrategy === 'refresh') {
-      routeStore.resetRouteCache();
-    }
+    routeStore.resetRouteCache();
   }
 
   const locale = ref<App.I18n.LangType>(localStg.get('lang') || 'zh-CN');
@@ -75,11 +72,7 @@ export const useAppStore = defineStore(SetupStoreId.App, () => {
   function updateDocumentTitleByLocale() {
     const { i18nKey, title } = router.currentRoute.value.meta;
 
-    const pageTitle = i18nKey ? $t(i18nKey) : title;
-    const platformTitle = $t('system.title');
-
-    // 如果页面标题存在且不等于平台标题，则显示为"平台名称 - 页面名称"
-    const documentTitle = pageTitle && pageTitle !== platformTitle ? `${platformTitle} - ${pageTitle}` : platformTitle;
+    const documentTitle = i18nKey ? $t(i18nKey) : title;
 
     useTitle(documentTitle);
   }

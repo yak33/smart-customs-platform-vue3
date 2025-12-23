@@ -1,6 +1,7 @@
 <script setup lang="ts">
-import { ref } from 'vue';
+import { ref, toRaw } from 'vue';
 import type { SelectOption } from 'naive-ui';
+import { jsonClone } from '@sa/utils';
 import { useNaiveForm } from '@/hooks/common/form';
 import { $t } from '@/locales';
 
@@ -9,15 +10,13 @@ defineOptions({
 });
 
 interface Emits {
-  (e: 'reset'): void;
   (e: 'search'): void;
 }
 
 const emit = defineEmits<Emits>();
 
-const { formRef, validate, restoreValidation } = useNaiveForm();
+const { validate, restoreValidation } = useNaiveForm();
 
-const model = defineModel<Api.System.OssConfigSearchParams>('model', { required: true });
 const isDefaltOptions = ref<SelectOption[]>([
   {
     label: '是',
@@ -28,9 +27,19 @@ const isDefaltOptions = ref<SelectOption[]>([
     value: '1'
   }
 ]);
+
+const model = defineModel<Api.System.OssConfigSearchParams>('model', { required: true });
+
+const defaultModel = jsonClone(toRaw(model.value));
+
+function resetModel() {
+  Object.assign(model.value, defaultModel);
+}
+
 async function reset() {
   await restoreValidation();
-  emit('reset');
+  resetModel();
+  emit('search');
 }
 
 async function search() {
@@ -43,7 +52,7 @@ async function search() {
   <NCard :bordered="false" size="small" class="card-wrapper">
     <NCollapse>
       <NCollapseItem :title="$t('common.search')" name="user-search">
-        <NForm ref="formRef" :model="model" label-placement="left" :label-width="80">
+        <NForm :model="model" label-placement="left" :label-width="80">
           <NGrid responsive="screen" item-responsive>
             <NFormItemGi span="24 s:12 m:6" label="配置名称" path="configKey" class="pr-24px">
               <NInput v-model:value="model.configKey" placeholder="请输入配置名称" />

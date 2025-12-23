@@ -104,8 +104,8 @@ handleFetchCaptchaCode();
 
 <template>
   <div>
-    <div class="mb-12px text-20px text-black font-500 sm:text-24px dark:text-white">注册新账户</div>
-    <div class="pb-20px text-14px text-#858585">欢迎注册！请输入您的账户信息</div>
+    <div class="mb-5px text-32px text-black font-600 sm:text-30px dark:text-white">注册新账户</div>
+    <div class="pb-18px text-16px text-#858585">欢迎注册！请输入您的账户信息</div>
     <NForm
       ref="formRef"
       :model="model"
@@ -139,24 +139,24 @@ handleFetchCaptchaCode();
       <NFormItem v-if="captchaEnabled" path="code">
         <div class="w-full flex-y-center gap-16px">
           <NInput v-model:value="model.code" :placeholder="$t('page.login.common.codePlaceholder')" />
-          <NSpin :show="codeLoading" :size="24" class="h-40px">
-            <NButton :focusable="false" class="login-code h-40px w-120px" @click="handleFetchCaptchaCode">
+          <NSpin :show="codeLoading" :size="28" class="h-52px">
+            <NButton :focusable="false" class="login-code h-52px w-136px" @click="handleFetchCaptchaCode">
               <img v-if="codeUrl" :src="codeUrl" />
               <NEmpty v-else :show-icon="false" description="暂无验证码" />
             </NButton>
           </NSpin>
         </div>
       </NFormItem>
-      <NSpace vertical :size="18" class="w-full pt-6px">
+      <NSpace vertical :size="18" class="w-full">
         <NButton type="primary" size="large" block :loading="registerLoading" @click="handleSubmit">
           {{ $t('page.login.common.register') }}
         </NButton>
       </NSpace>
     </NForm>
 
-    <div class="mt-24px w-full text-center text-14px text-#858585">
+    <div class="mt-24px w-full text-center text-18px text-#858585">
       您已有账户？
-      <NA type="primary" class="text-14px" @click="toggleLoginModule('pwd-login')">
+      <NA type="primary" class="text-18px" @click="toggleLoginModule('pwd-login')">
         {{ $t('common.login') }}
       </NA>
     </div>
@@ -177,9 +177,9 @@ handleFetchCaptchaCode();
 
 :deep(.n-base-selection),
 :deep(.n-input) {
-  --n-height: 40px !important;
-  --n-font-size: 14px !important;
-  --n-border-radius: 6px !important;
+  --n-height: 42px !important;
+  --n-font-size: 16px !important;
+  --n-border-radius: 8px !important;
 }
 
 :deep(.n-base-selection-label) {
@@ -187,8 +187,8 @@ handleFetchCaptchaCode();
 }
 
 :deep(.n-button) {
-  --n-height: 40px !important;
-  --n-font-size: 16px !important;
-  --n-border-radius: 6px !important;
+  --n-height: 42px !important;
+  --n-font-size: 18px !important;
+  --n-border-radius: 8px !important;
 }
 </style>

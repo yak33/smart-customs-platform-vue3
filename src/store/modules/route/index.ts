@@ -5,7 +5,7 @@ import { useBoolean } from '@sa/hooks';
 import type { CustomRoute, ElegantConstRoute, LastLevelRouteKey, RouteKey, RouteMap } from '@elegant-router/types';
 import { router } from '@/router';
 import { fetchGetRoutes } from '@/service/api';
-import { humpToLine, isNotNull } from '@/utils/common';
+import { isNotNull } from '@/utils/common';
 import { SetupStoreId } from '@/enum';
 import { createDynamicRoutes, createStaticRoutes, getAuthVueRoutes } from '@/router/routes';
 import { ROOT_ROUTE } from '@/router/routes/builtin';
@@ -104,6 +104,7 @@ export const useRouteStore = defineStore(SetupStoreId.Route, () => {
     const isLayout = route.component === 'Layout';
     const isFramePage = route.component === 'FrameView';
     const isParentLayout = route.component === 'ParentView';
+    const isBlankLayout = route.component?.startsWith('layout.blank$view.');
     const isExternalLink = isNotNull(route.meta.link);
 
     route.path = route.path.startsWith('/') ? route.path : `/${route.path}`;
@@ -115,7 +116,7 @@ export const useRouteStore = defineStore(SetupStoreId.Route, () => {
       .replace(/([A-Z])/g, '-$1')
       .toLowerCase();
     if (isLayout || isFramePage || isParentLayout) {
-      const name = humpToLine(route.path.substring(1).replace('/', '_'));
+      const name = route.path.substring(1).replaceAll('/', '_');
       route.name = parent ? `${parent.name}_${name}` : name;
     }
 
@@ -127,6 +128,8 @@ export const useRouteStore = defineStore(SetupStoreId.Route, () => {
     }
     // @ts-expect-error no hidden field
     route.meta.hideInMenu = route.hidden;
+    // @ts-expect-error route.meta.activeMenu is activeMenu type
+    route.meta.activeMenu = route.meta?.activeMenu?.substring(1);
     if (route.meta.hideInMenu && parent && !route.meta.activeMenu) {
       // @ts-expect-error parent.name is activeMenu type
       route.meta.activeMenu = parent.name;
@@ -138,19 +141,21 @@ export const useRouteStore = defineStore(SetupStoreId.Route, () => {
       if (isExternalLink) {
         route.meta.href = String(route.meta.link);
         const random = Math.random().toString(36).slice(2, 12);
-        route.path = `/${random}`;
         route.name = random;
+        route.path = `/${random}`;
         route.component = 'layout.base$view.iframe-page';
       } else {
-        route.props = {
-          // @ts-expect-error no query field
-          url: route.query
-        };
+        try {
+          route.props = {
+            // @ts-expect-error no query field
+            url: JSON.parse(route.query)?.url
+          };
+        } catch {}
       }
       route.component = parent && !isExternalLink ? 'view.iframe-page' : 'layout.base$view.iframe-page';
-    } else if (!isLayout && !isParentLayout) {
+    } else if (!isLayout && !isParentLayout && !isBlankLayout) {
       route.component = parent ? `view.${route.name}` : `layout.base$view.${route.name}`;
-    } else {
+    } else if (!isBlankLayout) {
       route.component = isParentLayout ? undefined : 'layout.base';
     }
 
@@ -389,7 +394,7 @@ export const useRouteStore = defineStore(SetupStoreId.Route, () => {
   }
 
   async function onRouteSwitchWhenLoggedIn() {
-    // await authStore.initUserInfo();
+    // some global init logic when logged in and switch route
   }
 
   async function onRouteSwitchWhenNotLoggedIn() {

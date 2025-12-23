@@ -24,16 +24,7 @@ declare module "@elegant-router/types" {
     "403": "/403";
     "404": "/404";
     "500": "/500";
-    "business": "/business";
-    "business_china-ports": "/business/china-ports";
-    "business_cityports": "/business/cityports";
-    "business_countries": "/business/countries";
-    "business_currencies": "/business/currencies";
-    "business_customer-enterprise": "/business/customer-enterprise";
-    "business_customs-ports": "/business/customs-ports";
-    "business_goods": "/business/goods";
-    "business_hscode": "/business/hscode";
-    "business_units": "/business/units";
+    "about": "/about";
     "demo": "/demo";
     "demo_demo": "/demo/demo";
     "demo_tree": "/demo/tree";
@@ -101,7 +92,7 @@ declare module "@elegant-router/types" {
     | "403"
     | "404"
     | "500"
-    | "business"
+    | "about"
     | "demo"
     | "home"
     | "iframe-page"
@@ -135,15 +126,7 @@ declare module "@elegant-router/types" {
     | "login"
     | "social-callback"
     | "user-center"
-    | "business_china-ports"
-    | "business_cityports"
-    | "business_countries"
-    | "business_currencies"
-    | "business_customer-enterprise"
-    | "business_customs-ports"
-    | "business_goods"
-    | "business_hscode"
-    | "business_units"
+    | "about"
     | "demo_demo"
     | "demo_tree"
     | "home"

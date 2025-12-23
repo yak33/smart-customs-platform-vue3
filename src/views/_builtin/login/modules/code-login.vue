@@ -10,7 +10,7 @@ defineOptions({
 });
 
 const { toggleLoginModule } = useRouterPush();
-const { formRef, validate } = useNaiveForm();
+const { validate } = useNaiveForm();
 const { label, isCounting, loading, getCaptcha } = useCaptcha();
 
 interface FormModel {
@@ -40,7 +40,11 @@ async function handleSubmit() {
 </script>
 
 <template>
-  <NForm ref="formRef" :model="model" :rules="rules" size="large" :show-label="false" @keyup.enter="handleSubmit">
+  <div class="mb-5px text-32px text-black font-600 sm:text-30px dark:text-white">
+    {{ $t('page.login.codeLogin.title') }}
+  </div>
+  <div class="pb-18px text-16px text-#858585">请输入您的手机号，我们将发送验证码到您的手机</div>
+  <NForm :model="model" :rules="rules" size="large" :show-label="false" @keyup.enter="handleSubmit">
     <NFormItem path="phone">
       <NInput v-model:value="model.phone" :placeholder="$t('page.login.common.phonePlaceholder')" />
     </NFormItem>
@@ -52,11 +56,11 @@ async function handleSubmit() {
         </NButton>
       </div>
     </NFormItem>
-    <NSpace vertical :size="18" class="w-full">
-      <NButton type="primary" size="large" round block @click="handleSubmit">
-        {{ $t('common.confirm') }}
+    <NSpace vertical :size="20" class="w-full">
+      <NButton type="primary" size="large" block @click="handleSubmit">
+        {{ $t('page.login.codeLogin.title') }}
       </NButton>
-      <NButton size="large" round block @click="toggleLoginModule('pwd-login')">
+      <NButton size="large" block @click="toggleLoginModule('pwd-login')">
         {{ $t('page.login.common.back') }}
       </NButton>
     </NSpace>
@@ -64,15 +68,20 @@ async function handleSubmit() {
 </template>
 
 <style scoped>
+:deep(.n-base-selection),
 :deep(.n-input) {
-  --n-height: 40px !important;
-  --n-font-size: 14px !important;
-  --n-border-radius: 6px !important;
+  --n-height: 42px !important;
+  --n-font-size: 16px !important;
+  --n-border-radius: 8px !important;
+}
+
+:deep(.n-base-selection-label) {
+  padding: 0 6px !important;
 }
 
 :deep(.n-button) {
-  --n-height: 40px !important;
-  --n-font-size: 16px !important;
-  --n-border-radius: 6px !important;
+  --n-height: 42px !important;
+  --n-font-size: 18px !important;
+  --n-border-radius: 8px !important;
 }
 </style>

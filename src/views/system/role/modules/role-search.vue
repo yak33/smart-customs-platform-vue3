@@ -1,5 +1,6 @@
 <script setup lang="ts">
-import { ref } from 'vue';
+import { ref, toRaw } from 'vue';
+import { jsonClone } from '@sa/utils';
 import { useNaiveForm } from '@/hooks/common/form';
 import { useDict } from '@/hooks/business/dict';
 import { $t } from '@/locales';
@@ -9,17 +10,18 @@ defineOptions({
 });
 
 interface Emits {
-  (e: 'reset'): void;
   (e: 'search'): void;
 }
 
 const emit = defineEmits<Emits>();
 
-const { formRef, validate, restoreValidation } = useNaiveForm();
+const { validate, restoreValidation } = useNaiveForm();
 
 const dateRangeCreateTime = ref<[string, string] | null>(null);
 
 const model = defineModel<Api.System.RoleSearchParams>('model', { required: true });
+
+const defaultModel = jsonClone(toRaw(model.value));
 
 const { options: sysNormalDisableOptions } = useDict('sys_normal_disable', false);
 
@@ -33,10 +35,15 @@ function onDateRangeCreateTimeUpdate(value: [string, string] | null) {
   }
 }
 
-async function reset() {
+function resetModel() {
   dateRangeCreateTime.value = null;
+  Object.assign(model.value, defaultModel);
+}
+
+async function reset() {
   await restoreValidation();
-  emit('reset');
+  resetModel();
+  emit('search');
 }
 
 async function search() {
@@ -49,7 +56,7 @@ async function search() {
   <NCard :bordered="false" size="small" class="card-wrapper">
     <NCollapse>
       <NCollapseItem :title="$t('common.search')" name="user-search">
-        <NForm ref="formRef" :model="model" label-placement="left" :label-width="80">
+        <NForm :model="model" label-placement="left" :label-width="80">
           <NGrid responsive="screen" item-responsive>
             <NFormItemGi span="24 s:12 m:6" label="角色名称" path="roleName" class="pr-24px">
               <NInput v-model:value="model.roleName" placeholder="请输入角色名称" />

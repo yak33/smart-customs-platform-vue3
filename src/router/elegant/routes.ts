@@ -40,96 +40,15 @@ export const generatedRoutes: GeneratedRoute[] = [
     }
   },
   {
-    name: 'business',
-    path: '/business',
-    component: 'layout.base',
+    name: 'about',
+    path: '/about',
+    component: 'layout.base$view.about',
     meta: {
-      title: 'business',
-      i18nKey: 'route.business'
-    },
-    children: [
-      {
-        name: 'business_china-ports',
-        path: '/business/china-ports',
-        component: 'view.business_china-ports',
-        meta: {
-          title: 'business_china-ports',
-          i18nKey: 'route.business_china-ports'
-        }
-      },
-      {
-        name: 'business_cityports',
-        path: '/business/cityports',
-        component: 'view.business_cityports',
-        meta: {
-          title: 'business_cityports',
-          i18nKey: 'route.business_cityports'
-        }
-      },
-      {
-        name: 'business_countries',
-        path: '/business/countries',
-        component: 'view.business_countries',
-        meta: {
-          title: 'business_countries',
-          i18nKey: 'route.business_countries'
-        }
-      },
-      {
-        name: 'business_currencies',
-        path: '/business/currencies',
-        component: 'view.business_currencies',
-        meta: {
-          title: 'business_currencies',
-          i18nKey: 'route.business_currencies'
-        }
-      },
-      {
-        name: 'business_customer-enterprise',
-        path: '/business/customer-enterprise',
-        component: 'view.business_customer-enterprise',
-        meta: {
-          title: 'business_customer-enterprise',
-          i18nKey: 'route.business_customer-enterprise'
-        }
-      },
-      {
-        name: 'business_customs-ports',
-        path: '/business/customs-ports',
-        component: 'view.business_customs-ports',
-        meta: {
-          title: 'business_customs-ports',
-          i18nKey: 'route.business_customs-ports'
-        }
-      },
-      {
-        name: 'business_goods',
-        path: '/business/goods',
-        component: 'view.business_goods',
-        meta: {
-          title: 'business_goods',
-          i18nKey: 'route.business_goods'
-        }
-      },
-      {
-        name: 'business_hscode',
-        path: '/business/hscode',
-        component: 'view.business_hscode',
-        meta: {
-          title: 'business_hscode',
-          i18nKey: 'route.business_hscode'
-        }
-      },
-      {
-        name: 'business_units',
-        path: '/business/units',
-        component: 'view.business_units',
-        meta: {
-          title: 'business_units',
-          i18nKey: 'route.business_units'
-        }
-      }
-    ]
+      title: 'about',
+      i18nKey: 'route.about',
+      icon: 'fluent:book-information-24-regular',
+      order: 99
+    }
   },
   {
     name: 'demo',

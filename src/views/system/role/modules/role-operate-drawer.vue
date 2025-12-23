@@ -1,5 +1,6 @@
 <script setup lang="ts">
-import { computed, reactive, ref, watch } from 'vue';
+import { computed, ref, watch } from 'vue';
+import { jsonClone } from '@sa/utils';
 import { useLoading } from '@sa/hooks';
 import { fetchCreateRole, fetchUpdateRole } from '@/service/api/system/role';
 import { fetchGetRoleMenuTreeSelect } from '@/service/api/system';
@@ -39,7 +40,7 @@ const menuOptions = ref<Api.System.MenuList>([]);
 
 const { loading: menuLoading, startLoading: startMenuLoading, endLoading: stopMenuLoading } = useLoading();
 
-const { formRef, validate, restoreValidation } = useNaiveForm();
+const { validate, restoreValidation } = useNaiveForm();
 const { createRequiredRule } = useFormRules();
 
 const title = computed(() => {
@@ -52,7 +53,7 @@ const title = computed(() => {
 
 type Model = Api.System.RoleOperateParams;
 
-const model: Model = reactive(createDefaultModel());
+const model = ref<Model>(createDefaultModel());
 
 function createDefaultModel(): Model {
   return {
@@ -77,20 +78,20 @@ const rules: Record<RuleKey, App.Global.FormRule> = {
 
 async function handleUpdateModelWhenEdit() {
   menuOptions.value = [];
-  model.menuIds = [];
+  model.value = createDefaultModel();
+  model.value.menuIds = [];
 
   if (props.operateType === 'add') {
     menuTreeRef.value?.refresh();
-    Object.assign(model, createDefaultModel());
     return;
   }
 
   if (props.operateType === 'edit' && props.rowData) {
     startMenuLoading();
-    Object.assign(model, props.rowData);
-    const { data, error } = await fetchGetRoleMenuTreeSelect(model.roleId!);
+    Object.assign(model.value, jsonClone(props.rowData));
+    const { data, error } = await fetchGetRoleMenuTreeSelect(model.value.roleId!);
     if (error) return;
-    model.menuIds = data.checkedKeys;
+    model.value.menuIds = data.checkedKeys;
     menuOptions.value = data.menus;
     stopMenuLoading();
   }
@@ -102,7 +103,7 @@ function closeDrawer() {
 
 async function handleSubmit() {
   await validate();
-  const { roleId, roleName, roleKey, roleSort, menuCheckStrictly, status, remark } = model;
+  const { roleId, roleName, roleKey, roleSort, menuCheckStrictly, status, remark } = model.value;
   const menuIds = menuTreeRef.value?.getCheckedMenuIds();
   // request
   if (props.operateType === 'add') {
@@ -148,7 +149,7 @@ watch(visible, () => {
 <template>
   <NDrawer v-model:show="visible" :title="title" display-directive="show" :width="800" class="max-w-90%">
     <NDrawerContent :title="title" :native-scrollbar="false" closable>
-      <NForm ref="formRef" :model="model" :rules="rules">
+      <NForm :model="model" :rules="rules">
         <NFormItem label="角色名称" path="roleName">
           <NInput v-model:value="model.roleName" placeholder="请输入角色名称" />
         </NFormItem>

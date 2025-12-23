@@ -18,6 +18,7 @@ import {
   getTabByRoute,
   getTabIdByRoute,
   isTabInTabs,
+  reorderFixedTabs,
   updateTabByI18nKey,
   updateTabsByI18nKey
 } from './shared';
@@ -112,10 +113,8 @@ export const useTabStore = defineStore(SetupStoreId.Tab, () => {
       await switchRouteByTab(nextTab);
     }
 
-    // reset route cache if cache strategy is close
-    if (themeStore.resetCacheStrategy === 'close') {
-      routeStore.resetRouteCache(removedTabRouteKey);
-    }
+    // reset route cache
+    routeStore.resetRouteCache(removedTabRouteKey);
   }
 
   /** remove active tab */
@@ -147,10 +146,8 @@ export const useTabStore = defineStore(SetupStoreId.Tab, () => {
     const tabsToRemove = tabs.value.filter(tab => !remainTabIds.includes(tab.id));
     const routeKeysToReset: RouteKey[] = [];
 
-    if (themeStore.resetCacheStrategy === 'close') {
-      for (const tab of tabsToRemove) {
-        routeKeysToReset.push(tab.routeKey);
-      }
+    for (const tab of tabsToRemove) {
+      routeKeysToReset.push(tab.routeKey);
     }
 
     const removedTabsIds = tabsToRemove.map(tab => tab.id);
@@ -263,6 +260,48 @@ export const useTabStore = defineStore(SetupStoreId.Tab, () => {
   }
 
   /**
+   * Fix tab
+   *
+   * @param tabId
+   */
+  function fixTab(tabId: string) {
+    const tabIndex = tabs.value.findIndex(t => t.id === tabId);
+    if (tabIndex === -1) return;
+
+    const tab = tabs.value[tabIndex];
+    const fixedCount = getFixedTabIds(tabs.value).length;
+    tab.fixedIndex = fixedCount;
+
+    if (tabIndex !== fixedCount) {
+      tabs.value.splice(tabIndex, 1);
+      tabs.value.splice(fixedCount, 0, tab);
+    }
+
+    reorderFixedTabs(tabs.value);
+  }
+
+  /**
+   * Unfix tab
+   *
+   * @param tabId
+   */
+  function unfixTab(tabId: string) {
+    const tabIndex = tabs.value.findIndex(t => t.id === tabId);
+    if (tabIndex === -1) return;
+
+    const tab = tabs.value[tabIndex];
+    tab.fixedIndex = undefined;
+
+    const fixedCount = getFixedTabIds(tabs.value).length;
+    if (tabIndex !== fixedCount) {
+      tabs.value.splice(tabIndex, 1);
+      tabs.value.splice(fixedCount, 0, tab);
+    }
+
+    reorderFixedTabs(tabs.value);
+  }
+
+  /**
    * Set new label of tab
    *
    * @default activeTabId
@@ -332,6 +371,7 @@ export const useTabStore = defineStore(SetupStoreId.Tab, () => {
     /** All tabs */
     tabs: allTabs,
     activeTabId,
+    homeTab,
     initHomeTab,
     initTabStore,
     addTab,
@@ -342,6 +382,8 @@ export const useTabStore = defineStore(SetupStoreId.Tab, () => {
     clearTabs,
     clearLeftTabs,
     clearRightTabs,
+    fixTab,
+    unfixTab,
     switchRouteByTab,
     setTabLabel,
     resetTabLabel,

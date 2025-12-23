@@ -1,5 +1,6 @@
 <script setup lang="ts">
-import { ref } from 'vue';
+import { ref, toRaw } from 'vue';
+import { jsonClone } from '@sa/utils';
 import { useNaiveForm } from '@/hooks/common/form';
 import { $t } from '@/locales';
 
@@ -14,13 +15,12 @@ interface Props {
 defineProps<Props>();
 
 interface Emits {
-  (e: 'reset'): void;
   (e: 'search'): void;
 }
 
 const emit = defineEmits<Emits>();
 
-const { formRef, validate, restoreValidation } = useNaiveForm();
+const { validate, restoreValidation } = useNaiveForm();
 
 const model = defineModel<Api.Tool.GenTableSearchParams>('model', { required: true });
 
@@ -33,9 +33,18 @@ function onDateRangeUpdate(value: [string, string] | null) {
   }
 }
 
+const defaultModel = jsonClone(toRaw(model.value));
+
+function resetModel() {
+  model.value.params!.beginTime = null;
+  model.value.params!.endTime = null;
+  Object.assign(model.value, defaultModel);
+}
+
 async function reset() {
   await restoreValidation();
-  emit('reset');
+  resetModel();
+  emit('search');
 }
 
 async function search() {
@@ -48,18 +57,18 @@ async function search() {
   <NCard :bordered="false" size="small" class="card-wrapper">
     <NCollapse>
       <NCollapseItem :title="$t('common.search')" name="user-search">
-        <NForm ref="formRef" :model="model" label-placement="left" :label-width="80">
+        <NForm :model="model" label-placement="left" :label-width="80">
           <NGrid responsive="screen" item-responsive>
-            <NFormItemGi span="24 s:12 m:6" label="数据源" path="dataName" class="pr-24px">
+            <NFormItemGi span="24 s:12 m:6" label="数据源" label-width="auto" path="dataName" class="pr-24px">
               <NSelect v-model:value="model.dataName" :options="options" placeholder="请选择数据源" />
             </NFormItemGi>
-            <NFormItemGi span="24 s:12 m:6" label="表名称" path="tableName" class="pr-24px">
-              <NInput v-model:value="model.tableName" placeholder="请输入表名称" @keyup.enter="search" />
+            <NFormItemGi span="24 s:12 m:6" label="表名称" label-width="auto" path="tableName" class="pr-24px">
+              <NInput v-model:value="model.tableName" placeholder="请输入表名称" />
             </NFormItemGi>
-            <NFormItemGi span="24 s:12 m:6" label="表描述" path="tableComment" class="pr-24px">
-              <NInput v-model:value="model.tableComment" placeholder="请输入表描述" @keyup.enter="search" />
+            <NFormItemGi span="24 s:12 m:6" label="表描述" label-width="auto" path="tableComment" class="pr-24px">
+              <NInput v-model:value="model.tableComment" placeholder="请输入表描述" />
             </NFormItemGi>
-            <NFormItemGi span="24 s:12 m:6" label="创建时间" class="pr-24px">
+            <NFormItemGi span="24 s:12 m:6" label="创建时间" label-width="auto" class="pr-24px">
               <NDatePicker
                 v-model:formatted-value="dateRange"
                 value-format="yyyy-MM-dd HH:mm:ss"

@@ -163,7 +163,7 @@ declare namespace Api {
       postIds: string[];
       /** user role ids */
       roleIds: string[];
-      /** user roles */
+      /** roles */
       roles: Role[];
     };
 
@@ -233,6 +233,14 @@ declare namespace Api {
      * - "2": local icon
      */
     type IconType = '1' | '2';
+
+    /**
+     * menu layout
+     *
+     * - "0": "默认布局"
+     * - "1": "空白布局"
+     */
+    type MenuLayout = '0' | '1';
 
     /**
      * menu type

@@ -1,6 +1,7 @@
 <script setup lang="ts">
-import { ref } from 'vue';
+import { ref, toRaw } from 'vue';
 import { NDatePicker } from 'naive-ui';
+import { jsonClone } from '@sa/utils';
 import { useNaiveForm } from '@/hooks/common/form';
 import { $t } from '@/locales';
 
@@ -15,13 +16,13 @@ interface Emits {
 
 const emit = defineEmits<Emits>();
 
-const { formRef, validate, restoreValidation } = useNaiveForm();
+const { validate, restoreValidation } = useNaiveForm();
 
 const dateRangeCreateTime = ref<[string, string] | null>(null);
 
-const datePickerRef = ref<InstanceType<typeof NDatePicker>>();
-
 const model = defineModel<Api.System.UserSearchParams>('model', { required: true });
+
+const defaultModel = jsonClone(toRaw(model.value));
 
 function onDateRangeCreateTimeUpdate(value: [string, string] | null) {
   const params = model.value.params!;
@@ -33,9 +34,14 @@ function onDateRangeCreateTimeUpdate(value: [string, string] | null) {
   }
 }
 
-async function reset() {
+function resetModel() {
   dateRangeCreateTime.value = null;
+  Object.assign(model.value, defaultModel);
+}
+
+async function reset() {
   await restoreValidation();
+  resetModel();
   emit('reset');
 }
 
@@ -49,7 +55,7 @@ async function search() {
   <NCard :bordered="false" size="small" class="table-search card-wrapper">
     <NCollapse>
       <NCollapseItem :title="$t('common.search')" name="user-search">
-        <NForm ref="formRef" :model="model" label-placement="left" :label-width="80">
+        <NForm :model="model" label-placement="left" :label-width="80">
           <NGrid responsive="screen" item-responsive>
             <NFormItemGi span="24 s:12 m:6" :label="$t('page.system.user.userName')" path="userName" class="pr-24px">
               <NInput v-model:value="model.userName" :placeholder="$t('page.system.user.form.userName.required')" />
@@ -83,7 +89,6 @@ async function search() {
               class="pr-24px"
             >
               <NDatePicker
-                ref="datePickerRef"
                 v-model:formatted-value="dateRangeCreateTime"
                 type="datetimerange"
                 value-format="yyyy-MM-dd HH:mm:ss"

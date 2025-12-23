@@ -98,7 +98,6 @@ export const useAuthStore = defineStore(SetupStoreId.Auth, () => {
   /**
    * Login
    *
-   * @param loginForm
    * @param [redirect=true] Whether to redirect after login. Default is `true`
    */
   async function login(loginForm: Api.Auth.PwdLoginForm | Api.Auth.SocialLoginForm, redirect = true) {
@@ -136,7 +135,7 @@ export const useAuthStore = defineStore(SetupStoreId.Auth, () => {
         // });
       }
     } else {
-      await resetStore();
+      resetStore();
     }
 
     endLoading();
@@ -181,7 +180,7 @@ export const useAuthStore = defineStore(SetupStoreId.Auth, () => {
       const pass = await getUserInfo();
 
       if (!pass) {
-        await resetStore();
+        resetStore();
       }
     }
   }

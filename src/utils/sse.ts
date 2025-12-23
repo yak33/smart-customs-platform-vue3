@@ -4,8 +4,12 @@ import useNoticeStore from '@/store/modules/notice';
 import { $t } from '@/locales';
 import { localStg } from './storage';
 
-// 初始化
-export const initSSE = (url: any) => {
+/**
+ * 初始化 SSE
+ *
+ * @param url - SSE 地址
+ */
+export const initSSE = (url: string) => {
   const token = localStg.get('token');
   if (import.meta.env.VITE_APP_SSE === 'N' || !token) {
     return;
@@ -13,18 +17,21 @@ export const initSSE = (url: any) => {
   const sseUrl = `${url}?Authorization=Bearer ${token}&clientid=${import.meta.env.VITE_APP_CLIENT_ID}`;
   const { data, error } = useEventSource(sseUrl, [], {
     autoReconnect: {
-      retries: 10,
-      delay: 3000,
+      retries: 5,
+      delay: 5000,
       onFailed() {
         // eslint-disable-next-line no-console
-        console.error('Failed to connect after 10 retries');
+        console.warn('Failed to connect to SSE after 5 attempts.');
       }
     }
   });
 
   watch(error, () => {
+    if (!error.value || error.value?.isTrusted) {
+      return;
+    }
     // eslint-disable-next-line no-console
-    console.error('SSE connection error:', error.value);
+    console.error('SSE connection error:\n', error.value);
     error.value = null;
   });
 
