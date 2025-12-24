@@ -333,6 +333,26 @@ export const generatedRoutes: GeneratedRoute[] = [
     ]
   },
   {
+    name: 'trade-compliance-library',
+    path: '/trade-compliance-library',
+    component: 'layout.base',
+    meta: {
+      title: 'trade-compliance-library',
+      i18nKey: 'route.trade-compliance-library'
+    },
+    children: [
+      {
+        name: 'trade-compliance-library_cityports',
+        path: '/trade-compliance-library/cityports',
+        component: 'view.trade-compliance-library_cityports',
+        meta: {
+          title: 'trade-compliance-library_cityports',
+          i18nKey: 'route.trade-compliance-library_cityports'
+        }
+      }
+    ]
+  },
+  {
     name: 'user-center',
     path: '/user-center',
     component: 'layout.base$view.user-center',

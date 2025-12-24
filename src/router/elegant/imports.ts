@@ -44,4 +44,5 @@ export const views: Record<LastLevelRouteKey, RouteComponent | (() => Promise<Ro
   system_tenant: () => import("@/views/system/tenant/index.vue"),
   system_user: () => import("@/views/system/user/index.vue"),
   tool_gen: () => import("@/views/tool/gen/index.vue"),
+  "trade-compliance-library_cityports": () => import("@/views/trade-compliance-library/cityports/index.vue"),
 };

@@ -301,7 +301,9 @@ const local: App.I18n.Schema = {
     exception_500: '500',
     tool: 'System Tools',
     tool_gen: 'Code Generation',
-    about: 'About'
+    about: 'About',
+    'trade-compliance-library': 'Trade Compliance Library',
+    'trade-compliance-library_cityports': 'CITY PORTS'
   },
   menu: {
     system_tenant: 'Tenant Management',

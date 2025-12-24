@@ -138,6 +138,61 @@ export function useDownload() {
     }
   }
 
+  function isZipSignature(buffer: ArrayBuffer) {
+    if (buffer.byteLength < 4) return false;
+    const view = new Uint8Array(buffer, 0, 4);
+    const sig = `${view[0]}-${view[1]}-${view[2]}-${view[3]}`;
+    return (
+      sig === '80-75-3-4' || // PK\003\004
+      sig === '80-75-5-6' || // PK\005\006
+      sig === '80-75-7-8' // PK\007\008
+    );
+  }
+
+  /** ZIP下载逻辑 */
+  async function executeZipDownload(url: string, filename: string): Promise<void> {
+    const timestamp = Date.now();
+    const fullUrl = `${baseURL}${url}${url.includes('?') ? '&' : '?'}t=${timestamp}`;
+
+    window.$loading?.startLoading('正在下载数据，请稍后...');
+
+    try {
+      const response = await fetch(fullUrl, {
+        method: 'GET',
+        headers: getCommonHeaders('application/octet-stream')
+      });
+
+      if (response.status !== 200) {
+        throw new Error(errorCodeRecord.default);
+      }
+
+      const contentType = response.headers.get('Content-Type') || '';
+      if (contentType.includes('application/json')) {
+        const res = await response.json();
+        const code = res.code as CommonType.ErrorCode;
+        throw new Error(errorCodeRecord[code] || res.msg || errorCodeRecord.default);
+      }
+
+      const buffer = await response.arrayBuffer();
+      if (!isZipSignature(buffer)) {
+        const text = new TextDecoder().decode(buffer);
+        try {
+          const res = JSON.parse(text);
+          const code = res.code as CommonType.ErrorCode;
+          throw new Error(errorCodeRecord[code] || res.msg || errorCodeRecord.default);
+        } catch {
+          throw new Error(text || errorCodeRecord.default);
+        }
+      }
+
+      downloadByData(buffer, filename, 'application/zip');
+    } catch (error: any) {
+      window.$message?.error(error.message);
+    } finally {
+      window.$loading?.endLoading();
+    }
+  }
+
   /** 公共下载接口 */
   const download = (url: string, params: Record<string, any>, filename: string) =>
     executeDownload({ method: 'POST', url, params, filename });
@@ -150,13 +205,7 @@ export function useDownload() {
     });
 
   /** ZIP文件下载 */
-  const zip = (url: string, filename: string) =>
-    executeDownload({
-      method: 'GET',
-      url,
-      filename,
-      contentType: 'application/octet-stream'
-    });
+  const zip = (url: string, filename: string) => executeZipDownload(url, filename);
 
   return {
     oss,

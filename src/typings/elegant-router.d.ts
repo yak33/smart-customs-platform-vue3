@@ -53,6 +53,8 @@ declare module "@elegant-router/types" {
     "system_user": "/system/user";
     "tool": "/tool";
     "tool_gen": "/tool/gen";
+    "trade-compliance-library": "/trade-compliance-library";
+    "trade-compliance-library_cityports": "/trade-compliance-library/cityports";
     "user-center": "/user-center";
   };
 
@@ -101,6 +103,7 @@ declare module "@elegant-router/types" {
     | "social-callback"
     | "system"
     | "tool"
+    | "trade-compliance-library"
     | "user-center"
   >;
 
@@ -148,6 +151,7 @@ declare module "@elegant-router/types" {
     | "system_tenant"
     | "system_user"
     | "tool_gen"
+    | "trade-compliance-library_cityports"
   >;
 
   /**

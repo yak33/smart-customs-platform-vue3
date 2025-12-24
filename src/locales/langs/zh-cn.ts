@@ -297,7 +297,9 @@ const local: App.I18n.Schema = {
     exception_500: '500',
     tool: '系统工具',
     tool_gen: '代码生成',
-    about: '关于'
+    about: '关于',
+    'trade-compliance-library': '贸易合规库',
+    'trade-compliance-library_cityports': '港口管理'
   },
   menu: {
     system_tenant: '租户管理',

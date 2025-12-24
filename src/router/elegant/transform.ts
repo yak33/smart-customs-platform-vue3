@@ -199,6 +199,8 @@ const routeMap: RouteMap = {
   "system_user": "/system/user",
   "tool": "/tool",
   "tool_gen": "/tool/gen",
+  "trade-compliance-library": "/trade-compliance-library",
+  "trade-compliance-library_cityports": "/trade-compliance-library/cityports",
   "user-center": "/user-center"
 };
 
