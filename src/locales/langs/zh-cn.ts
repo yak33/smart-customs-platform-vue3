@@ -1202,6 +1202,34 @@ const local: App.I18n.Schema = {
         statusChangeSuccess: '状态修改成功'
       }
     },
+    tradeComplianceLibrary: {
+      cityports: {
+        title: '港口列表',
+        cityportCode: '港口编码',
+        cnname: '中文名称',
+        enname: '英文名称',
+        addCityport: '新增港口',
+        editCityport: '编辑港口',
+        form: {
+          id: {
+            required: '请输入主键',
+            invalid: '主键不能为空'
+          },
+          cityportCode: {
+            required: '请输入港口编码',
+            invalid: '港口编码不能为空'
+          },
+          cnname: {
+            required: '请输入中文名称',
+            invalid: '中文名称不能为空'
+          },
+          enname: {
+            required: '请输入英文名称',
+            invalid: '英文名称不能为空'
+          }
+        }
+      }
+    },
     about: {
       title: '关于',
       introduction: `RuoYi-Plus-Soybean 是一个现代化的企业级多租户管理系统，它结合了 RuoYi-Vue-Plus 的强大后端功能和 Soybean Admin 的现代化前端特性，为开发者提供了完整的企业管理解决方案。`,

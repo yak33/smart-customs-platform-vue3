@@ -51,19 +51,19 @@ const { columns, columnChecks, data, getData, getDataByPage, loading, mobilePagi
       },
       {
         key: 'cityportCode',
-        title: '港口编码',
+        title: $t('page.tradeComplianceLibrary.cityports.cityportCode'),
         align: 'center',
         minWidth: 120
       },
       {
         key: 'cnname',
-        title: '中文名称',
+        title: $t('page.tradeComplianceLibrary.cityports.cnname'),
         align: 'center',
         minWidth: 120
       },
       {
         key: 'enname',
-        title: '英文名称',
+        title: $t('page.tradeComplianceLibrary.cityports.enname'),
         align: 'center',
         minWidth: 120
       },
@@ -148,14 +148,23 @@ function edit(id: CommonType.IdType) {
 }
 
 function handleExport() {
-  download('/trade-compliance-library/cityports/export', searchParams.value, `港口_${new Date().getTime()}.xlsx`);
+  download(
+    '/trade-compliance-library/cityports/export',
+    searchParams.value,
+    `${$t('page.tradeComplianceLibrary.cityports.title')}_${new Date().getTime()}.xlsx`
+  );
 }
 </script>
 
 <template>
   <div class="min-h-500px flex-col-stretch gap-16px overflow-hidden lt-sm:overflow-auto">
     <CityportsSearch v-model:model="searchParams" @search="getDataByPage" />
-    <NCard title="港口列表" :bordered="false" size="small" class="card-wrapper sm:flex-1-hidden">
+    <NCard
+      :title="$t('page.tradeComplianceLibrary.cityports.title')"
+      :bordered="false"
+      size="small"
+      class="card-wrapper sm:flex-1-hidden"
+    >
       <template #header-extra>
         <TableHeaderOperation
           v-model:columns="columnChecks"

@@ -42,14 +42,41 @@ async function search() {
       <NCollapseItem :title="$t('common.search')" name="TradeComplianceLibrary-cityports-search">
         <NForm :model="model" label-placement="left" :label-width="80">
           <NGrid responsive="screen" item-responsive>
-            <NFormItemGi span="24 s:12 m:6" label="港口编码" path="cityportCode" class="pr-24px">
-              <NInput v-model:value="model.cityportCode" placeholder="请输入港口编码" @keyup.enter="search" />
+            <NFormItemGi
+              span="24 s:12 m:6"
+              :label="$t('page.tradeComplianceLibrary.cityports.cityportCode')"
+              path="cityportCode"
+              class="pr-24px"
+            >
+              <NInput
+                v-model:value="model.cityportCode"
+                :placeholder="$t('page.tradeComplianceLibrary.cityports.form.cityportCode.required')"
+                @keyup.enter="search"
+              />
             </NFormItemGi>
-            <NFormItemGi span="24 s:12 m:6" label="中文名称" path="cnname" class="pr-24px">
-              <NInput v-model:value="model.cnname" placeholder="请输入中文名称" @keyup.enter="search" />
+            <NFormItemGi
+              span="24 s:12 m:6"
+              :label="$t('page.tradeComplianceLibrary.cityports.cnname')"
+              path="cnname"
+              class="pr-24px"
+            >
+              <NInput
+                v-model:value="model.cnname"
+                :placeholder="$t('page.tradeComplianceLibrary.cityports.form.cnname.required')"
+                @keyup.enter="search"
+              />
             </NFormItemGi>
-            <NFormItemGi span="24 s:12 m:6" label="英文名称" path="enname" class="pr-24px">
-              <NInput v-model:value="model.enname" placeholder="请输入英文名称" @keyup.enter="search" />
+            <NFormItemGi
+              span="24 s:12 m:6"
+              :label="$t('page.tradeComplianceLibrary.cityports.enname')"
+              path="enname"
+              class="pr-24px"
+            >
+              <NInput
+                v-model:value="model.enname"
+                :placeholder="$t('page.tradeComplianceLibrary.cityports.form.enname.required')"
+                @keyup.enter="search"
+              />
             </NFormItemGi>
             <NFormItemGi :show-feedback="false" span="24 s:12 m:6" class="pr-24px">
               <NSpace class="w-full" justify="end">

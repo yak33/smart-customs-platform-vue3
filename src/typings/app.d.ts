@@ -1013,6 +1013,22 @@ declare namespace App {
             statusChangeSuccess: string;
           };
         };
+        tradeComplianceLibrary: {
+          cityports: {
+            title: string;
+            cityportCode: string;
+            cnname: string;
+            enname: string;
+            addCityport: string;
+            editCityport: string;
+            form: {
+              id: FormMsg;
+              cityportCode: FormMsg;
+              cnname: FormMsg;
+              enname: FormMsg;
+            };
+          };
+        };
         about: {
           title: string;
           introduction: string;

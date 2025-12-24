@@ -33,8 +33,8 @@ const { createRequiredRule } = useFormRules();
 
 const title = computed(() => {
   const titles: Record<NaiveUI.TableOperateType, string> = {
-    add: '新增港口',
-    edit: '编辑港口'
+    add: $t('page.tradeComplianceLibrary.cityports.addCityport'),
+    edit: $t('page.tradeComplianceLibrary.cityports.editCityport')
   };
   return titles[props.operateType];
 });
@@ -55,10 +55,10 @@ function createDefaultModel(): Model {
 type RuleKey = Extract<keyof Model, 'id' | 'cityportCode' | 'cnname' | 'enname'>;
 
 const rules: Record<RuleKey, App.Global.FormRule> = {
-  id: createRequiredRule('主键不能为空'),
-  cityportCode: createRequiredRule('港口编码不能为空'),
-  cnname: createRequiredRule('中文名称不能为空'),
-  enname: createRequiredRule('英文名称不能为空')
+  id: createRequiredRule($t('page.tradeComplianceLibrary.cityports.form.id.invalid')),
+  cityportCode: createRequiredRule($t('page.tradeComplianceLibrary.cityports.form.cityportCode.invalid')),
+  cnname: createRequiredRule($t('page.tradeComplianceLibrary.cityports.form.cnname.invalid')),
+  enname: createRequiredRule($t('page.tradeComplianceLibrary.cityports.form.enname.invalid'))
 };
 
 function handleUpdateModelWhenEdit() {
@@ -106,14 +106,23 @@ watch(visible, () => {
   <NDrawer v-model:show="visible" :title="title" display-directive="show" :width="800" class="max-w-90%">
     <NDrawerContent :title="title" :native-scrollbar="false" closable>
       <NForm :model="model" :rules="rules">
-        <NFormItem label="港口编码" path="cityportCode">
-          <NInput v-model:value="model.cityportCode" placeholder="请输入港口编码" />
+        <NFormItem :label="$t('page.tradeComplianceLibrary.cityports.cityportCode')" path="cityportCode">
+          <NInput
+            v-model:value="model.cityportCode"
+            :placeholder="$t('page.tradeComplianceLibrary.cityports.form.cityportCode.required')"
+          />
         </NFormItem>
-        <NFormItem label="中文名称" path="cnname">
-          <NInput v-model:value="model.cnname" placeholder="请输入中文名称" />
+        <NFormItem :label="$t('page.tradeComplianceLibrary.cityports.cnname')" path="cnname">
+          <NInput
+            v-model:value="model.cnname"
+            :placeholder="$t('page.tradeComplianceLibrary.cityports.form.cnname.required')"
+          />
         </NFormItem>
-        <NFormItem label="英文名称" path="enname">
-          <NInput v-model:value="model.enname" placeholder="请输入英文名称" />
+        <NFormItem :label="$t('page.tradeComplianceLibrary.cityports.enname')" path="enname">
+          <NInput
+            v-model:value="model.enname"
+            :placeholder="$t('page.tradeComplianceLibrary.cityports.form.enname.required')"
+          />
         </NFormItem>
       </NForm>
       <template #footer>

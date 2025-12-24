@@ -1210,6 +1210,34 @@ const local: App.I18n.Schema = {
         statusChangeSuccess: 'Status modified successfully'
       }
     },
+    tradeComplianceLibrary: {
+      cityports: {
+        title: 'City Ports List',
+        cityportCode: 'Port Code',
+        cnname: 'Chinese Name',
+        enname: 'English Name',
+        addCityport: 'Add Port',
+        editCityport: 'Edit Port',
+        form: {
+          id: {
+            required: 'Please enter primary key',
+            invalid: 'Primary key cannot be empty'
+          },
+          cityportCode: {
+            required: 'Please enter port code',
+            invalid: 'Port code cannot be empty'
+          },
+          cnname: {
+            required: 'Please enter Chinese name',
+            invalid: 'Chinese name cannot be empty'
+          },
+          enname: {
+            required: 'Please enter English name',
+            invalid: 'English name cannot be empty'
+          }
+        }
+      }
+    },
     about: {
       title: 'About',
       introduction: `RuoYi-Plus-Soybean is a modern, enterprise-level multi-tenant management system. It combines the powerful backend capabilities of RuoYi-Vue-Plus with the modern frontend features of Soybean Admin, providing developers with a complete enterprise management solution.`,
