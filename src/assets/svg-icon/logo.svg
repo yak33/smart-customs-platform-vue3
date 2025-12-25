@@ -1,42 +1,6 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200">
-  <defs>
-    <linearGradient id="logoGradient" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%" style="stop-color:#1e40af;stop-opacity:1" />
-      <stop offset="100%" style="stop-color:#3b82f6;stop-opacity:1" />
-    </linearGradient>
-  </defs>
-  
-  <!-- 外圆环 -->
-  <circle cx="100" cy="100" r="90" fill="url(#logoGradient)"/>
-  
-  <!-- 内圆背景 -->
-  <circle cx="100" cy="100" r="75" fill="white" opacity="0.15"/>
-  
-  <!-- 地球轮廓 -->
-  <circle cx="100" cy="100" r="50" fill="none" stroke="white" stroke-width="2.5" opacity="0.5"/>
-  
-  <!-- 经纬线 -->
-  <ellipse cx="100" cy="100" rx="50" ry="20" fill="none" stroke="white" stroke-width="2" opacity="0.6"/>
-  <ellipse cx="100" cy="100" rx="20" ry="50" fill="none" stroke="white" stroke-width="2" opacity="0.6"/>
-  
-  <!-- 集装箱图标 -->
-  <g transform="translate(100, 100)">
-    <!-- 集装箱主体 -->
-    <rect x="-28" y="-18" width="56" height="36" rx="3" fill="white" opacity="0.95"/>
-    
-    <!-- 集装箱线条 -->
-    <line x1="-28" y1="-6" x2="28" y2="-6" stroke="#1e40af" stroke-width="2.5"/>
-    <line x1="-28" y1="6" x2="28" y2="6" stroke="#1e40af" stroke-width="2.5"/>
-    <line x1="-10" y1="-18" x2="-10" y2="18" stroke="#1e40af" stroke-width="2.5"/>
-    <line x1="10" y1="-18" x2="10" y2="18" stroke="#1e40af" stroke-width="2.5"/>
-    
-    <!-- 对勾（通关标志） -->
-    <path d="M -8 22 L -4 26 L 6 16" fill="none" stroke="#10b981" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
-  </g>
-  
-  <!-- 装饰圆点 -->
-  <circle cx="100" cy="30" r="4" fill="white" opacity="0.8"/>
-  <circle cx="170" cy="100" r="4" fill="white" opacity="0.8"/>
-  <circle cx="100" cy="170" r="4" fill="white" opacity="0.8"/>
-  <circle cx="30" cy="100" r="4" fill="white" opacity="0.8"/>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 1024">
+  <path d="M512 1024a512 512 0 1 1 512-512 512 512 0 0 1-512 512z m0-947.2a435.2 435.2 0 1 0 435.2 435.2A435.2 435.2 0 0 0 512 76.8z"
+        fill="#3FC1F8"></path>
+  <path d="M512 870.4a358.4 358.4 0 1 1 253.44-104.96A358.4 358.4 0 0 1 512 870.4z m0-264.96s35.584 49.408 58.88 79.104A83.2 83.2 0 0 0 635.392 716.8a374.272 374.272 0 0 0 81.408-7.68 203.264 203.264 0 0 1-68.864-52.48 1305.6 1305.6 0 0 1-89.088-115.456h155.904v-22.016h-161.28V419.84h139.264v-22.016H332.8v22.016h139.008v99.328h-161.28v22.016h155.904a1197.568 1197.568 0 0 1-88.32 114.688 197.888 197.888 0 0 1-69.12 51.2 360.448 360.448 0 0 0 81.152 7.68 84.224 84.224 0 0 0 64.512-32c23.296-29.696 57.6-76.8 58.88-79.36z m14.592-230.4a377.6 377.6 0 0 0 48.384 3.328 151.296 151.296 0 0 0 21.504 0 76.8 76.8 0 0 0 49.152-22.784L680.192 307.2h-87.04a134.656 134.656 0 0 1-28.672 38.144 187.136 187.136 0 0 1-37.888 30.208zM343.808 307.2l34.56 47.872a76.8 76.8 0 0 0 49.152 22.784 151.296 151.296 0 0 0 21.504 0 380.928 380.928 0 0 0 48.384-3.328A193.024 193.024 0 0 1 460.8 345.344 131.072 131.072 0 0 1 430.848 307.2h-87.04z"
+        fill="#2D88EF"></path>
 </svg>

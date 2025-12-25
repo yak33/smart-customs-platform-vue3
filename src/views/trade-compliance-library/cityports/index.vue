@@ -47,7 +47,7 @@ const { columns, columnChecks, data, getData, getDataByPage, loading, mobilePagi
         title: $t('common.index'),
         align: 'center',
         width: 64,
-        render: (_, index) => index + 1
+        render: (_, index) => ((searchParams.value.pageNum || 1) - 1) * (searchParams.value.pageSize || 10) + index + 1
       },
       {
         key: 'cityportCode',
