@@ -342,6 +342,15 @@ export const generatedRoutes: GeneratedRoute[] = [
     },
     children: [
       {
+        name: 'trade-compliance-library_china-ports',
+        path: '/trade-compliance-library/china-ports',
+        component: 'view.trade-compliance-library_china-ports',
+        meta: {
+          title: 'trade-compliance-library_china-ports',
+          i18nKey: 'route.trade-compliance-library_china-ports'
+        }
+      },
+      {
         name: 'trade-compliance-library_cityports',
         path: '/trade-compliance-library/cityports',
         component: 'view.trade-compliance-library_cityports',

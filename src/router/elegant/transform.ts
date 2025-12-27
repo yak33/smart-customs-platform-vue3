@@ -200,6 +200,7 @@ const routeMap: RouteMap = {
   "tool": "/tool",
   "tool_gen": "/tool/gen",
   "trade-compliance-library": "/trade-compliance-library",
+  "trade-compliance-library_china-ports": "/trade-compliance-library/china-ports",
   "trade-compliance-library_cityports": "/trade-compliance-library/cityports",
   "user-center": "/user-center"
 };

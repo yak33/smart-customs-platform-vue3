@@ -54,6 +54,7 @@ declare module "@elegant-router/types" {
     "tool": "/tool";
     "tool_gen": "/tool/gen";
     "trade-compliance-library": "/trade-compliance-library";
+    "trade-compliance-library_china-ports": "/trade-compliance-library/china-ports";
     "trade-compliance-library_cityports": "/trade-compliance-library/cityports";
     "user-center": "/user-center";
   };
@@ -151,6 +152,7 @@ declare module "@elegant-router/types" {
     | "system_tenant"
     | "system_user"
     | "tool_gen"
+    | "trade-compliance-library_china-ports"
     | "trade-compliance-library_cityports"
   >;
 

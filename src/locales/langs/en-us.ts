@@ -303,7 +303,8 @@ const local: App.I18n.Schema = {
     tool_gen: 'Code Generation',
     about: 'About',
     'trade-compliance-library': 'Trade Compliance Library',
-    'trade-compliance-library_cityports': 'CITY PORTS'
+    'trade-compliance-library_cityports': 'CITY PORTS',
+    'trade-compliance-library_china-ports': 'China Ports'
   },
   menu: {
     system_tenant: 'Tenant Management',

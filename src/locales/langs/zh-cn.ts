@@ -299,7 +299,8 @@ const local: App.I18n.Schema = {
     tool_gen: '代码生成',
     about: '关于',
     'trade-compliance-library': '贸易合规库',
-    'trade-compliance-library_cityports': '港口管理'
+    'trade-compliance-library_cityports': '港口管理',
+    'trade-compliance-library_china-ports': '中国港口'
   },
   menu: {
     system_tenant: '租户管理',
