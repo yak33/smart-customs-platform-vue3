@@ -53,19 +53,25 @@ const { columns, columnChecks, data, getData, getDataByPage, loading, mobilePagi
         key: 'chinaPortCode',
         title: '口岸编码',
         align: 'center',
-        minWidth: 120
+        width: 120,
+        resizable: true,
+        ellipsis: { tooltip: true }
       },
       {
         key: 'name',
         title: '口岸名称',
         align: 'center',
-        minWidth: 120
+        width: 120,
+        resizable: true,
+        ellipsis: { tooltip: true }
       },
       {
         key: 'enname',
         title: '口岸英文名称',
         align: 'center',
-        minWidth: 120
+        width: 150,
+        resizable: true,
+        ellipsis: { tooltip: true }
       },
       {
         key: 'operate',

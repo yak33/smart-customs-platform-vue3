@@ -358,6 +358,15 @@ export const generatedRoutes: GeneratedRoute[] = [
           title: 'trade-compliance-library_cityports',
           i18nKey: 'route.trade-compliance-library_cityports'
         }
+      },
+      {
+        name: 'trade-compliance-library_countries',
+        path: '/trade-compliance-library/countries',
+        component: 'view.trade-compliance-library_countries',
+        meta: {
+          title: 'trade-compliance-library_countries',
+          i18nKey: 'route.trade-compliance-library_countries'
+        }
       }
     ]
   },
