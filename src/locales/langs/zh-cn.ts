@@ -304,7 +304,10 @@ const local: App.I18n.Schema = {
     'trade-compliance-library_countries': '国家管理',
     'trade-compliance-library_currencies': '币制管理',
     'trade-compliance-library_hscode': '海关编码税则',
-    'trade-compliance-library_units': '计量单位'
+    'trade-compliance-library_units': '计量单位',
+    business: '业务管理',
+    business_enterprise: '企业备案信息',
+    business_goods: '商品管理'
   },
   menu: {
     system_tenant: '租户管理',

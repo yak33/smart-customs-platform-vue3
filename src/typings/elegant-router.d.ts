@@ -25,6 +25,9 @@ declare module "@elegant-router/types" {
     "404": "/404";
     "500": "/500";
     "about": "/about";
+    "business": "/business";
+    "business_enterprise": "/business/enterprise";
+    "business_goods": "/business/goods";
     "demo": "/demo";
     "demo_demo": "/demo/demo";
     "demo_tree": "/demo/tree";
@@ -100,6 +103,7 @@ declare module "@elegant-router/types" {
     | "404"
     | "500"
     | "about"
+    | "business"
     | "demo"
     | "home"
     | "iframe-page"
@@ -135,6 +139,8 @@ declare module "@elegant-router/types" {
     | "social-callback"
     | "user-center"
     | "about"
+    | "business_enterprise"
+    | "business_goods"
     | "demo_demo"
     | "demo_tree"
     | "home"

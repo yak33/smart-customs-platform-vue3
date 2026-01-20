@@ -3,14 +3,14 @@ export const themeSettings: App.Theme.ThemeSetting = {
   themeScheme: 'auto',
   grayscale: false,
   colourWeakness: false,
-  recommendColor: false,
-  themeColor: '#0E42D2',
+  recommendColor: true,
+  themeColor: '#646cff',
   themeRadius: 6,
   otherColor: {
-    info: '#0E42D2',
-    success: '#009A29',
-    warning: '#D25F00',
-    error: '#CB2634'
+    info: '#2080f0',
+    success: '#52c41a',
+    warning: '#faad14',
+    error: '#f5222d'
   },
   isInfoFollowPrimary: true,
   layout: {
@@ -44,7 +44,7 @@ export const themeSettings: App.Theme.ThemeSetting = {
   fixedHeaderAndTab: true,
   sider: {
     inverted: false,
-    width: 230,
+    width: 220,
     collapsedWidth: 64,
     mixWidth: 90,
     mixCollapsedWidth: 64,
@@ -59,8 +59,8 @@ export const themeSettings: App.Theme.ThemeSetting = {
   },
   watermark: {
     visible: import.meta.env.VITE_WATERMARK === 'Y',
-    text: 'RuoYi-Plus-Soybean',
-    enableUserName: true,
+    text: 'SmartCustomsPlatform',
+    enableUserName: false,
     enableTime: false,
     timeFormat: 'YYYY-MM-DD HH:mm'
   },

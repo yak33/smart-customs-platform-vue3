@@ -51,6 +51,35 @@ export const generatedRoutes: GeneratedRoute[] = [
     }
   },
   {
+    name: 'business',
+    path: '/business',
+    component: 'layout.base',
+    meta: {
+      title: 'business',
+      i18nKey: 'route.business'
+    },
+    children: [
+      {
+        name: 'business_enterprise',
+        path: '/business/enterprise',
+        component: 'view.business_enterprise',
+        meta: {
+          title: 'business_enterprise',
+          i18nKey: 'route.business_enterprise'
+        }
+      },
+      {
+        name: 'business_goods',
+        path: '/business/goods',
+        component: 'view.business_goods',
+        meta: {
+          title: 'business_goods',
+          i18nKey: 'route.business_goods'
+        }
+      }
+    ]
+  },
+  {
     name: 'demo',
     path: '/demo',
     component: 'layout.base',

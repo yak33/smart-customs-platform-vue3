@@ -308,7 +308,10 @@ const local: App.I18n.Schema = {
     'trade-compliance-library_countries': 'Countries',
     'trade-compliance-library_currencies': 'Currencies',
     'trade-compliance-library_hscode': 'HS Code',
-    'trade-compliance-library_units': 'Units'
+    'trade-compliance-library_units': 'Units',
+    business: 'Business Management',
+    business_enterprise: 'Enterprise Records',
+    business_goods: 'Goods Management'
   },
   menu: {
     system_tenant: 'Tenant Management',
