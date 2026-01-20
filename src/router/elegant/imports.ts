@@ -48,4 +48,6 @@ export const views: Record<LastLevelRouteKey, RouteComponent | (() => Promise<Ro
   "trade-compliance-library_cityports": () => import("@/views/trade-compliance-library/cityports/index.vue"),
   "trade-compliance-library_countries": () => import("@/views/trade-compliance-library/countries/index.vue"),
   "trade-compliance-library_currencies": () => import("@/views/trade-compliance-library/currencies/index.vue"),
+  "trade-compliance-library_hscode": () => import("@/views/trade-compliance-library/hscode/index.vue"),
+  "trade-compliance-library_units": () => import("@/views/trade-compliance-library/units/index.vue"),
 };

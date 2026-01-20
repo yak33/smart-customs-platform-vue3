@@ -58,6 +58,8 @@ declare module "@elegant-router/types" {
     "trade-compliance-library_cityports": "/trade-compliance-library/cityports";
     "trade-compliance-library_countries": "/trade-compliance-library/countries";
     "trade-compliance-library_currencies": "/trade-compliance-library/currencies";
+    "trade-compliance-library_hscode": "/trade-compliance-library/hscode";
+    "trade-compliance-library_units": "/trade-compliance-library/units";
     "user-center": "/user-center";
   };
 
@@ -158,6 +160,8 @@ declare module "@elegant-router/types" {
     | "trade-compliance-library_cityports"
     | "trade-compliance-library_countries"
     | "trade-compliance-library_currencies"
+    | "trade-compliance-library_hscode"
+    | "trade-compliance-library_units"
   >;
 
   /**

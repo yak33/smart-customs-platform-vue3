@@ -376,6 +376,24 @@ export const generatedRoutes: GeneratedRoute[] = [
           title: 'trade-compliance-library_currencies',
           i18nKey: 'route.trade-compliance-library_currencies'
         }
+      },
+      {
+        name: 'trade-compliance-library_hscode',
+        path: '/trade-compliance-library/hscode',
+        component: 'view.trade-compliance-library_hscode',
+        meta: {
+          title: 'trade-compliance-library_hscode',
+          i18nKey: 'route.trade-compliance-library_hscode'
+        }
+      },
+      {
+        name: 'trade-compliance-library_units',
+        path: '/trade-compliance-library/units',
+        component: 'view.trade-compliance-library_units',
+        meta: {
+          title: 'trade-compliance-library_units',
+          i18nKey: 'route.trade-compliance-library_units'
+        }
       }
     ]
   },
