@@ -305,7 +305,8 @@ const local: App.I18n.Schema = {
     'trade-compliance-library': 'Trade Compliance Library',
     'trade-compliance-library_cityports': 'CITY PORTS',
     'trade-compliance-library_china-ports': 'China Ports',
-    'trade-compliance-library_countries': 'Countries'
+    'trade-compliance-library_countries': 'Countries',
+    'trade-compliance-library_currencies': 'Currencies'
   },
   menu: {
     system_tenant: 'Tenant Management',

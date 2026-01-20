@@ -1,45 +1,41 @@
 <script setup lang="tsx">
 import { ref } from 'vue';
 import { NDivider } from 'naive-ui';
-import { fetchBatchDeleteCountries, fetchGetCountriesList } from '@/service/api/trade-compliance-library/countries';
+import { fetchBatchDeleteCurrencies, fetchGetCurrenciesList } from '@/service/api/trade-compliance-library/currencies';
 import { useAppStore } from '@/store/modules/app';
 import { useAuth } from '@/hooks/business/auth';
 import { useDownload } from '@/hooks/business/download';
 import { defaultTransform, useNaivePaginatedTable, useTableOperate } from '@/hooks/common/table';
 import { $t } from '@/locales';
 import ButtonIcon from '@/components/custom/button-icon.vue';
-import CountriesOperateDrawer from './modules/countries-operate-drawer.vue';
-import CountriesSearch from './modules/countries-search.vue';
+import CurrenciesOperateDrawer from './modules/currencies-operate-drawer.vue';
+import CurrenciesSearch from './modules/currencies-search.vue';
 
 defineOptions({
-  name: 'CountriesList'
+  name: 'CurrenciesList'
 });
 
 const appStore = useAppStore();
 const { download } = useDownload();
 const { hasAuth } = useAuth();
 
-const warnLevelLabelMap: Record<string, string> = {
-  '1': '低',
-  '2': '中',
-  '3': '高'
-};
-
-const searchParams = ref<Api.TradeComplianceLibrary.CountriesSearchParams>({
+const searchParams = ref<Api.TradeComplianceLibrary.CurrenciesSearchParams>({
   pageNum: 1,
   pageSize: 10,
   code: null,
+  currency: null,
   name: null,
-  standardCode: null,
   enname: null,
-  isenabled: null,
-  warnLevel: null,
+  currencyOrder: null,
+  rate: null,
+  thresholdLow: null,
+  thresholdHigh: null,
   params: {}
 });
 
 const { columns, columnChecks, data, getData, getDataByPage, loading, mobilePagination, scrollX } =
   useNaivePaginatedTable({
-    api: () => fetchGetCountriesList(searchParams.value),
+    api: () => fetchGetCurrenciesList(searchParams.value),
     transform: response => defaultTransform(response),
     onPaginationParamsChange: params => {
       searchParams.value.pageNum = params.page;
@@ -60,59 +56,45 @@ const { columns, columnChecks, data, getData, getDataByPage, loading, mobilePagi
       },
       {
         key: 'code',
-        title: '国家编码',
+        title: '币种编码',
         align: 'center',
-        width: 120,
-        resizable: true,
-        ellipsis: {
-          tooltip: true
-        }
+        minWidth: 120
+      },
+      {
+        key: 'currency',
+        title: '开证币种',
+        align: 'center',
+        minWidth: 120
       },
       {
         key: 'name',
-        title: '国家名称',
+        title: '币种名称',
         align: 'center',
-        width: 120,
-        resizable: true,
-        ellipsis: {
-          tooltip: true
-        }
+        minWidth: 120
       },
       {
         key: 'enname',
-        title: '国家英文名称',
+        title: '币种英文名称',
         align: 'center',
-        width: 150,
-        resizable: true,
-        ellipsis: {
-          tooltip: true
-        }
+        minWidth: 120
       },
       {
-        key: 'standardCode',
-        title: '自定义代码',
+        key: 'rate',
+        title: '汇率',
         align: 'center',
-        width: 120,
-        resizable: true,
-        ellipsis: {
-          tooltip: true
-        }
+        minWidth: 120
       },
       {
-        key: 'isenabled',
-        title: '是否启用',
+        key: 'thresholdLow',
+        title: '阀值低',
         align: 'center',
-        width: 100,
-        resizable: true,
-        render: row => (row.isenabled ? '是' : '否')
+        minWidth: 120
       },
       {
-        key: 'warnLevel',
-        title: '预警级别',
+        key: 'thresholdHigh',
+        title: '阀值高',
         align: 'center',
-        width: 100,
-        resizable: true,
-        render: row => warnLevelLabelMap[row.warnLevel] ?? '-'
+        minWidth: 120
       },
       {
         key: 'operate',
@@ -122,8 +104,8 @@ const { columns, columnChecks, data, getData, getDataByPage, loading, mobilePagi
         render: row => {
           const divider = () => {
             if (
-              !hasAuth('tradeComplianceLibrary:countries:edit') ||
-              !hasAuth('tradeComplianceLibrary:countries:remove')
+              !hasAuth('tradeComplianceLibrary:currencies:edit') ||
+              !hasAuth('tradeComplianceLibrary:currencies:remove')
             ) {
               return null;
             }
@@ -131,7 +113,7 @@ const { columns, columnChecks, data, getData, getDataByPage, loading, mobilePagi
           };
 
           const editBtn = () => {
-            if (!hasAuth('tradeComplianceLibrary:countries:edit')) {
+            if (!hasAuth('tradeComplianceLibrary:currencies:edit')) {
               return null;
             }
             return (
@@ -146,7 +128,7 @@ const { columns, columnChecks, data, getData, getDataByPage, loading, mobilePagi
           };
 
           const deleteBtn = () => {
-            if (!hasAuth('tradeComplianceLibrary:countries:remove')) {
+            if (!hasAuth('tradeComplianceLibrary:currencies:remove')) {
               return null;
             }
             return (
@@ -178,14 +160,14 @@ const { drawerVisible, operateType, editingData, handleAdd, handleEdit, checkedR
 
 async function handleBatchDelete() {
   // request
-  const { error } = await fetchBatchDeleteCountries(checkedRowKeys.value);
+  const { error } = await fetchBatchDeleteCurrencies(checkedRowKeys.value);
   if (error) return;
   onBatchDeleted();
 }
 
 async function handleDelete(id: CommonType.IdType) {
   // request
-  const { error } = await fetchBatchDeleteCountries([id]);
+  const { error } = await fetchBatchDeleteCurrencies([id]);
   if (error) return;
   onDeleted();
 }
@@ -195,22 +177,22 @@ function edit(id: CommonType.IdType) {
 }
 
 function handleExport() {
-  download('/trade-compliance-library/countries/export', searchParams.value, `国家_${new Date().getTime()}.xlsx`);
+  download('/trade-compliance-library/currencies/export', searchParams.value, `币制_${new Date().getTime()}.xlsx`);
 }
 </script>
 
 <template>
   <div class="min-h-500px flex-col-stretch gap-16px overflow-hidden lt-sm:overflow-auto">
-    <CountriesSearch v-model:model="searchParams" @search="getDataByPage" />
-    <NCard title="国家列表" :bordered="false" size="small" class="card-wrapper sm:flex-1-hidden">
+    <CurrenciesSearch v-model:model="searchParams" @search="getDataByPage" />
+    <NCard title="币制列表" :bordered="false" size="small" class="card-wrapper sm:flex-1-hidden">
       <template #header-extra>
         <TableHeaderOperation
           v-model:columns="columnChecks"
           :disabled-delete="checkedRowKeys.length === 0"
           :loading="loading"
-          :show-add="hasAuth('tradeComplianceLibrary:countries:add')"
-          :show-delete="hasAuth('tradeComplianceLibrary:countries:remove')"
-          :show-export="hasAuth('tradeComplianceLibrary:countries:export')"
+          :show-add="hasAuth('tradeComplianceLibrary:currencies:add')"
+          :show-delete="hasAuth('v:currencies:remove')"
+          :show-export="hasAuth('v:currencies:export')"
           @add="handleAdd"
           @delete="handleBatchDelete"
           @export="handleExport"
@@ -226,12 +208,11 @@ function handleExport() {
         :scroll-x="scrollX"
         :loading="loading"
         remote
-        resizable
         :row-key="row => row.id"
         :pagination="mobilePagination"
         class="sm:h-full"
       />
-      <CountriesOperateDrawer
+      <CurrenciesOperateDrawer
         v-model:visible="drawerVisible"
         :operate-type="operateType"
         :row-data="editingData"

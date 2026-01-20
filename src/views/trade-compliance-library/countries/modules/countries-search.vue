@@ -74,11 +74,11 @@ async function search() {
             <NFormItemGi span="24 s:12 m:6" label="国家名称" label-width="auto" path="name" class="pr-24px">
               <NInput v-model:value="model.name" placeholder="请输入国家名称" />
             </NFormItemGi>
-            <NFormItemGi span="24 s:12 m:6" label="自定义代码" label-width="auto" path="standardCode" class="pr-24px">
-              <NInput v-model:value="model.standardCode" placeholder="请输入自定义代码" />
-            </NFormItemGi>
             <NFormItemGi span="24 s:12 m:6" label="国家英文名称" label-width="auto" path="enname" class="pr-24px">
               <NInput v-model:value="model.enname" placeholder="请输入国家英文名称" />
+            </NFormItemGi>
+            <NFormItemGi span="24 s:12 m:6" label="自定义代码" label-width="auto" path="standardCode" class="pr-24px">
+              <NInput v-model:value="model.standardCode" placeholder="请输入自定义代码" />
             </NFormItemGi>
             <NFormItemGi span="24 s:12 m:6" label="是否启用" label-width="auto" path="isenabled" class="pr-24px">
               <NSelect

@@ -367,6 +367,15 @@ export const generatedRoutes: GeneratedRoute[] = [
           title: 'trade-compliance-library_countries',
           i18nKey: 'route.trade-compliance-library_countries'
         }
+      },
+      {
+        name: 'trade-compliance-library_currencies',
+        path: '/trade-compliance-library/currencies',
+        component: 'view.trade-compliance-library_currencies',
+        meta: {
+          title: 'trade-compliance-library_currencies',
+          i18nKey: 'route.trade-compliance-library_currencies'
+        }
       }
     ]
   },

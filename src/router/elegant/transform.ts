@@ -203,6 +203,7 @@ const routeMap: RouteMap = {
   "trade-compliance-library_china-ports": "/trade-compliance-library/china-ports",
   "trade-compliance-library_cityports": "/trade-compliance-library/cityports",
   "trade-compliance-library_countries": "/trade-compliance-library/countries",
+  "trade-compliance-library_currencies": "/trade-compliance-library/currencies",
   "user-center": "/user-center"
 };
 

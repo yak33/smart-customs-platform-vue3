@@ -47,4 +47,5 @@ export const views: Record<LastLevelRouteKey, RouteComponent | (() => Promise<Ro
   "trade-compliance-library_china-ports": () => import("@/views/trade-compliance-library/china-ports/index.vue"),
   "trade-compliance-library_cityports": () => import("@/views/trade-compliance-library/cityports/index.vue"),
   "trade-compliance-library_countries": () => import("@/views/trade-compliance-library/countries/index.vue"),
+  "trade-compliance-library_currencies": () => import("@/views/trade-compliance-library/currencies/index.vue"),
 };

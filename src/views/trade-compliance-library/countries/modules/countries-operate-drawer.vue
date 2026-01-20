@@ -159,22 +159,17 @@ watch(visible, () => {
         <NFormItem label="国家名称" path="name">
           <NInput v-model:value="model.name" placeholder="请输入国家名称" />
         </NFormItem>
-        <NFormItem label="自定义代码" path="standardCode">
-          <NInput v-model:value="model.standardCode" placeholder="请输入自定义代码" />
-        </NFormItem>
         <NFormItem label="国家英文名称" path="enname">
           <NInput v-model:value="model.enname" placeholder="请输入国家英文名称" />
+        </NFormItem>
+        <NFormItem label="自定义代码" path="standardCode">
+          <NInput v-model:value="model.standardCode" placeholder="请输入自定义代码" />
         </NFormItem>
         <NFormItem label="是否启用" path="isenabled">
           <NSelect v-model:value="model.isenabled" placeholder="请选择是否启用" :options="enableOptions" clearable />
         </NFormItem>
-        <NFormItem label="预警级别（1低 2中 3高）" path="warnLevel">
-          <NSelect
-            v-model:value="model.warnLevel"
-            placeholder="请选择预警级别（1低 2中 3高）"
-            :options="warnLevelOptions"
-            clearable
-          />
+        <NFormItem label="预警级别" path="warnLevel">
+          <NSelect v-model:value="model.warnLevel" placeholder="请选择预警级别" :options="warnLevelOptions" clearable />
         </NFormItem>
       </NForm>
       <template #footer>
