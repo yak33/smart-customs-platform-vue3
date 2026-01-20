@@ -3,7 +3,7 @@ import { request } from '@/service/request';
 /** 获取商品库列表 */
 export function fetchGetPnList(params?: Api.Business.PnSearchParams) {
   return request<Api.Business.PnList>({
-    url: '/business/pn/list',
+    url: '/business/goods/list',
     method: 'get',
     params
   });
@@ -11,7 +11,7 @@ export function fetchGetPnList(params?: Api.Business.PnSearchParams) {
 /** 新增商品库 */
 export function fetchCreatePn(data: Api.Business.PnOperateParams) {
   return request<boolean>({
-    url: '/business/pn',
+    url: '/business/goods',
     method: 'post',
     data
   });
@@ -20,7 +20,7 @@ export function fetchCreatePn(data: Api.Business.PnOperateParams) {
 /** 修改商品库 */
 export function fetchUpdatePn(data: Api.Business.PnOperateParams) {
   return request<boolean>({
-    url: '/business/pn',
+    url: '/business/goods',
     method: 'put',
     data
   });
@@ -29,7 +29,7 @@ export function fetchUpdatePn(data: Api.Business.PnOperateParams) {
 /** 批量删除商品库 */
 export function fetchBatchDeletePn(ids: CommonType.IdType[]) {
   return request<boolean>({
-    url: `/business/pn/${ids.join(',')}`,
+    url: `/business/goods/${ids.join(',')}`,
     method: 'delete'
   });
 }

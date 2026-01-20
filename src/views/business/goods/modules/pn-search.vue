@@ -89,33 +89,12 @@ async function search() {
             </NFormItemGi>
             <NFormItemGi span="24 s:12 m:6" label="是否审核" label-width="auto" path="isAudited" class="pr-24px">
               <NInput v-model:value="model.isAudited" placeholder="请输入是否审核" />
-            <NFormItemGi
-              span="24 s:12 m:6"
-              label="商品类型"
-              label-width="auto"
-              path="partType"
-              class="pr-24px"
-            >
-              <NSelect
-                v-model:value="model.partType"
-                placeholder="请选择商品类型"
-                :options="[]"
-                clearable
-              />
             </NFormItemGi>
-            <NFormItemGi
-              span="24 s:12 m:6"
-              label="待备案状态"
-              label-width="auto"
-              path="partStatus"
-              class="pr-24px"
-            >
-              <NSelect
-                v-model:value="model.partStatus"
-                placeholder="请选择待备案状态"
-                :options="[]"
-                clearable
-              />
+            <NFormItemGi span="24 s:12 m:6" label="商品类型" label-width="auto" path="partType" class="pr-24px">
+              <NSelect v-model:value="model.partType" placeholder="请选择商品类型" :options="[]" clearable />
+            </NFormItemGi>
+            <NFormItemGi span="24 s:12 m:6" label="待备案状态" label-width="auto" path="partStatus" class="pr-24px">
+              <NSelect v-model:value="model.partStatus" placeholder="请选择待备案状态" :options="[]" clearable />
             </NFormItemGi>
             <NFormItemGi :show-feedback="false" span="24" class="pr-24px">
               <NSpace class="w-full" justify="end">

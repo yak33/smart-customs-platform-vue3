@@ -78,13 +78,14 @@ const { columns, columnChecks, data, getData, getDataByPage, loading, mobilePagi
         title: $t('common.index'),
         align: 'center',
         width: 64,
-        render: (_, index) => index + 1
+        render: (_, index) => ((searchParams.value.pageNum || 1) - 1) * (searchParams.value.pageSize || 10) + index + 1
       },
       {
         key: 'partNumber',
         title: '物料号',
         align: 'center',
         width: 120,
+        resizable: true,
         ellipsis: { tooltip: true }
       },
       {
@@ -92,6 +93,7 @@ const { columns, columnChecks, data, getData, getDataByPage, loading, mobilePagi
         title: '供应商',
         align: 'center',
         minWidth: 120,
+        resizable: true,
         ellipsis: { tooltip: true }
       },
       {
@@ -99,6 +101,7 @@ const { columns, columnChecks, data, getData, getDataByPage, loading, mobilePagi
         title: '申报品名',
         align: 'center',
         minWidth: 120,
+        resizable: true,
         ellipsis: { tooltip: true }
       },
       {
@@ -106,6 +109,7 @@ const { columns, columnChecks, data, getData, getDataByPage, loading, mobilePagi
         title: '税号',
         align: 'center',
         minWidth: 120,
+        resizable: true,
         ellipsis: { tooltip: true }
       },
       {
@@ -113,6 +117,7 @@ const { columns, columnChecks, data, getData, getDataByPage, loading, mobilePagi
         title: '申报要素',
         align: 'center',
         minWidth: 120,
+        resizable: true,
         ellipsis: { tooltip: true }
       },
       {
@@ -120,6 +125,7 @@ const { columns, columnChecks, data, getData, getDataByPage, loading, mobilePagi
         title: '疫检代码',
         align: 'center',
         minWidth: 120,
+        resizable: true,
         ellipsis: { tooltip: true }
       },
       {
@@ -127,6 +133,7 @@ const { columns, columnChecks, data, getData, getDataByPage, loading, mobilePagi
         title: '疫检名称',
         align: 'center',
         minWidth: 120,
+        resizable: true,
         ellipsis: { tooltip: true }
       },
       {
@@ -134,6 +141,7 @@ const { columns, columnChecks, data, getData, getDataByPage, loading, mobilePagi
         title: '申报要素备注',
         align: 'center',
         minWidth: 120,
+        resizable: true,
         ellipsis: { tooltip: true }
       },
       {
@@ -141,6 +149,7 @@ const { columns, columnChecks, data, getData, getDataByPage, loading, mobilePagi
         title: '型号规格',
         align: 'center',
         minWidth: 120,
+        resizable: true,
         ellipsis: { tooltip: true }
       },
       {
@@ -148,6 +157,7 @@ const { columns, columnChecks, data, getData, getDataByPage, loading, mobilePagi
         title: '中文品名',
         align: 'center',
         minWidth: 120,
+        resizable: true,
         ellipsis: { tooltip: true }
       },
       {
@@ -155,6 +165,7 @@ const { columns, columnChecks, data, getData, getDataByPage, loading, mobilePagi
         title: '英文品名',
         align: 'center',
         minWidth: 120,
+        resizable: true,
         ellipsis: { tooltip: true }
       },
       {
@@ -162,6 +173,7 @@ const { columns, columnChecks, data, getData, getDataByPage, loading, mobilePagi
         title: '英文描述',
         align: 'center',
         minWidth: 120,
+        resizable: true,
         ellipsis: { tooltip: true }
       },
       {
@@ -169,6 +181,7 @@ const { columns, columnChecks, data, getData, getDataByPage, loading, mobilePagi
         title: '中文描述',
         align: 'center',
         minWidth: 120,
+        resizable: true,
         ellipsis: { tooltip: true }
       },
       {
@@ -176,6 +189,7 @@ const { columns, columnChecks, data, getData, getDataByPage, loading, mobilePagi
         title: '单位',
         align: 'center',
         minWidth: 120,
+        resizable: true,
         ellipsis: { tooltip: true }
       },
       {
@@ -183,6 +197,7 @@ const { columns, columnChecks, data, getData, getDataByPage, loading, mobilePagi
         title: '包装',
         align: 'center',
         minWidth: 120,
+        resizable: true,
         ellipsis: { tooltip: true }
       },
       {
@@ -190,6 +205,7 @@ const { columns, columnChecks, data, getData, getDataByPage, loading, mobilePagi
         title: '是否危品',
         align: 'center',
         minWidth: 120,
+        resizable: true,
         ellipsis: { tooltip: true }
       },
       {
@@ -197,6 +213,7 @@ const { columns, columnChecks, data, getData, getDataByPage, loading, mobilePagi
         title: '危品等级',
         align: 'center',
         minWidth: 120,
+        resizable: true,
         ellipsis: { tooltip: true }
       },
       {
@@ -204,6 +221,7 @@ const { columns, columnChecks, data, getData, getDataByPage, loading, mobilePagi
         title: 'UN号',
         align: 'center',
         minWidth: 120,
+        resizable: true,
         ellipsis: { tooltip: true }
       },
       {
@@ -211,6 +229,7 @@ const { columns, columnChecks, data, getData, getDataByPage, loading, mobilePagi
         title: '化工品号',
         align: 'center',
         minWidth: 120,
+        resizable: true,
         ellipsis: { tooltip: true }
       },
       {
@@ -218,6 +237,7 @@ const { columns, columnChecks, data, getData, getDataByPage, loading, mobilePagi
         title: '单价',
         align: 'center',
         minWidth: 120,
+        resizable: true,
         ellipsis: { tooltip: true }
       },
       {
@@ -225,6 +245,7 @@ const { columns, columnChecks, data, getData, getDataByPage, loading, mobilePagi
         title: '原产国',
         align: 'center',
         minWidth: 120,
+        resizable: true,
         ellipsis: { tooltip: true }
       },
       {
@@ -232,6 +253,7 @@ const { columns, columnChecks, data, getData, getDataByPage, loading, mobilePagi
         title: '净重',
         align: 'center',
         minWidth: 120,
+        resizable: true,
         ellipsis: { tooltip: true }
       },
       {
@@ -239,6 +261,7 @@ const { columns, columnChecks, data, getData, getDataByPage, loading, mobilePagi
         title: '客户确认',
         align: 'center',
         minWidth: 120,
+        resizable: true,
         ellipsis: { tooltip: true }
       },
       {
@@ -246,6 +269,7 @@ const { columns, columnChecks, data, getData, getDataByPage, loading, mobilePagi
         title: '是否审核',
         align: 'center',
         minWidth: 120,
+        resizable: true,
         ellipsis: { tooltip: true }
       },
       {
@@ -253,6 +277,7 @@ const { columns, columnChecks, data, getData, getDataByPage, loading, mobilePagi
         title: '已验核实货',
         align: 'center',
         minWidth: 120,
+        resizable: true,
         ellipsis: { tooltip: true }
       },
       {
@@ -260,6 +285,7 @@ const { columns, columnChecks, data, getData, getDataByPage, loading, mobilePagi
         title: '关联附件',
         align: 'center',
         minWidth: 120,
+        resizable: true,
         ellipsis: { tooltip: true }
       },
       {
@@ -267,6 +293,7 @@ const { columns, columnChecks, data, getData, getDataByPage, loading, mobilePagi
         title: '商品类型',
         align: 'center',
         minWidth: 120,
+        resizable: true,
         ellipsis: { tooltip: true }
       },
       {
@@ -274,6 +301,7 @@ const { columns, columnChecks, data, getData, getDataByPage, loading, mobilePagi
         title: '待备案状态',
         align: 'center',
         width: 120,
+        resizable: true,
         ellipsis: { tooltip: true }
       },
       {
@@ -281,6 +309,7 @@ const { columns, columnChecks, data, getData, getDataByPage, loading, mobilePagi
         title: '更新说明',
         align: 'center',
         minWidth: 120,
+        resizable: true,
         ellipsis: { tooltip: true }
       },
       {
@@ -288,6 +317,7 @@ const { columns, columnChecks, data, getData, getDataByPage, loading, mobilePagi
         title: '备注',
         align: 'center',
         minWidth: 120,
+        resizable: true,
         ellipsis: { tooltip: true }
       },
       {
@@ -295,6 +325,7 @@ const { columns, columnChecks, data, getData, getDataByPage, loading, mobilePagi
         title: '创建日期',
         align: 'center',
         minWidth: 120,
+        resizable: true,
         ellipsis: { tooltip: true }
       },
       {
@@ -302,6 +333,7 @@ const { columns, columnChecks, data, getData, getDataByPage, loading, mobilePagi
         title: '最后更新人',
         align: 'center',
         minWidth: 120,
+        resizable: true,
         ellipsis: { tooltip: true }
       },
       {
@@ -309,6 +341,7 @@ const { columns, columnChecks, data, getData, getDataByPage, loading, mobilePagi
         title: '最后更新日期',
         align: 'center',
         minWidth: 120,
+        resizable: true,
         ellipsis: { tooltip: true }
       },
       {
