@@ -3,7 +3,7 @@ import { request } from '@/service/request';
 /** 获取港口列表 */
 export function fetchGetCityportsList(params?: Api.TradeComplianceLibrary.CityportsSearchParams) {
   return request<Api.TradeComplianceLibrary.CityportsList>({
-    url: '/trade-compliance-library/cityports/list',
+    url: '/business/trade-compliance-library/cityports/list',
     method: 'get',
     params
   });
@@ -11,7 +11,7 @@ export function fetchGetCityportsList(params?: Api.TradeComplianceLibrary.Citypo
 /** 新增港口 */
 export function fetchCreateCityports(data: Api.TradeComplianceLibrary.CityportsOperateParams) {
   return request<boolean>({
-    url: '/trade-compliance-library/cityports',
+    url: '/business/trade-compliance-library/cityports',
     method: 'post',
     data
   });
@@ -20,7 +20,7 @@ export function fetchCreateCityports(data: Api.TradeComplianceLibrary.CityportsO
 /** 修改港口 */
 export function fetchUpdateCityports(data: Api.TradeComplianceLibrary.CityportsOperateParams) {
   return request<boolean>({
-    url: '/trade-compliance-library/cityports',
+    url: '/business/trade-compliance-library/cityports',
     method: 'put',
     data
   });
@@ -29,7 +29,7 @@ export function fetchUpdateCityports(data: Api.TradeComplianceLibrary.CityportsO
 /** 批量删除港口 */
 export function fetchBatchDeleteCityports(ids: CommonType.IdType[]) {
   return request<boolean>({
-    url: `/trade-compliance-library/cityports/${ids.join(',')}`,
+    url: `/business/trade-compliance-library/cityports/${ids.join(',')}`,
     method: 'delete'
   });
 }
