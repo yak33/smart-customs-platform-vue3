@@ -71,7 +71,7 @@ function toggleExpand() {
 
 <template>
   <NCard :bordered="false" size="small" class="card-wrapper">
-    <NForm :model="model" label-placement="left" :label-width="80">
+    <NForm :model="model" label-placement="left" :label-width="100">
       <!-- 统一使用一个 NGrid，通过 v-if 控制第二行显示 -->
       <NGrid responsive="screen" item-responsive :x-gap="24" :y-gap="16">
         <NFormItemGi :show-feedback="false" span="24 s:12 m:6" label="国家编码" path="code">
