@@ -72,19 +72,19 @@ function toggleExpand() {
 <template>
   <NCard :bordered="false" size="small" class="card-wrapper">
     <NForm :model="model" label-placement="left" :label-width="80">
-      <!-- 第一行：默认显示的查询条件 -->
-      <NGrid responsive="screen" item-responsive>
-        <NFormItemGi span="24 s:12 m:6" label="国家编码" label-width="auto" path="code" class="pr-24px">
+      <!-- 统一使用一个 NGrid，通过 v-if 控制第二行显示 -->
+      <NGrid responsive="screen" item-responsive :x-gap="24" :y-gap="16">
+        <NFormItemGi :show-feedback="false" span="24 s:12 m:6" label="国家编码" path="code">
           <NInput v-model:value="model.code" placeholder="请输入国家编码" />
         </NFormItemGi>
-        <NFormItemGi span="24 s:12 m:6" label="国家名称" label-width="auto" path="name" class="pr-24px">
+        <NFormItemGi :show-feedback="false" span="24 s:12 m:6" label="国家名称" path="name">
           <NInput v-model:value="model.name" placeholder="请输入国家名称" />
         </NFormItemGi>
-        <NFormItemGi span="24 s:12 m:6" label="国家英文名称" label-width="auto" path="enname" class="pr-24px">
+        <NFormItemGi :show-feedback="false" span="24 s:12 m:6" label="国家英文名称" path="enname">
           <NInput v-model:value="model.enname" placeholder="请输入国家英文名称" />
         </NFormItemGi>
-        <!-- 操作按钮放在第一行末尾 -->
-        <NFormItemGi :show-feedback="false" span="24 s:12 m:6" class="pr-24px">
+        <!-- 操作按钮 -->
+        <NFormItemGi :show-feedback="false" span="24 s:12 m:6">
           <NSpace class="w-full" justify="end" align="center">
             <NButton @click="reset">
               <template #icon>
@@ -107,17 +107,15 @@ function toggleExpand() {
             </NButton>
           </NSpace>
         </NFormItemGi>
-      </NGrid>
 
-      <!-- 第二行：展开后显示的查询条件 -->
-      <NGrid v-if="expanded" responsive="screen" item-responsive>
-        <NFormItemGi span="24 s:12 m:6" label="自定义代码" label-width="auto" path="standardCode" class="pr-24px">
+        <!-- 展开后的查询条件 -->
+        <NFormItemGi v-if="expanded" :show-feedback="false" span="24 s:12 m:6" label="自定义代码" path="standardCode">
           <NInput v-model:value="model.standardCode" placeholder="请输入自定义代码" />
         </NFormItemGi>
-        <NFormItemGi span="24 s:12 m:6" label="是否启用" label-width="auto" path="isenabled" class="pr-24px">
+        <NFormItemGi v-if="expanded" :show-feedback="false" span="24 s:12 m:6" label="是否启用" path="isenabled">
           <NSelect v-model:value="isenabledString" placeholder="请选择是否启用" :options="enableOptions" clearable />
         </NFormItemGi>
-        <NFormItemGi span="24 s:12 m:6" label="预警级别" label-width="auto" path="warnLevel" class="pr-24px">
+        <NFormItemGi v-if="expanded" :show-feedback="false" span="24 s:12 m:6" label="预警级别" path="warnLevel">
           <NSelect v-model:value="model.warnLevel" placeholder="请选择预警级别" :options="warnLevelOptions" clearable />
         </NFormItemGi>
       </NGrid>
