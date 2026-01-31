@@ -18,8 +18,7 @@ export function useDownload() {
 
   const isHttps = () => {
     const protocol = document.location.protocol;
-    const hostname = document.location.hostname;
-    return protocol === 'https' || hostname === 'localhost' || hostname === '127.0.0.1';
+    return protocol === 'https:';
   };
 
   /** 获取通用请求头 */
@@ -81,12 +80,14 @@ export function useDownload() {
   }
 
   /** 处理响应 */
-  async function handleResponse(response: Response) {
-    if (response.headers.get('Content-Type')?.includes('application/json')) {
+  async function handleResponse(response: Response): Promise<void> {
+    const contentType = response.headers.get('Content-Type');
+    if (contentType?.includes('application/json')) {
       const res = await response.json();
       const code = res.code as CommonType.ErrorCode;
       throw new Error(errorCodeRecord[code] || res.msg || errorCodeRecord.default);
     }
+    // 非 JSON 响应正常返回，继续处理文件下载
   }
 
   /** 核心下载逻辑 */
