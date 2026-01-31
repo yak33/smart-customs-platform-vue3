@@ -154,7 +154,11 @@ function edit(id: CommonType.IdType) {
 }
 
 function handleExport() {
-  download('/trade-compliance-library/chinaPorts/export', searchParams.value, `口岸信息_${new Date().getTime()}.xlsx`);
+  download(
+    '/business/trade-compliance-library/chinaPorts/export',
+    searchParams.value,
+    `口岸信息_${new Date().getTime()}.xlsx`
+  );
 }
 </script>
 

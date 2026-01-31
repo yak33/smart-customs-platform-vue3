@@ -195,7 +195,11 @@ function edit(id: CommonType.IdType) {
 }
 
 function handleExport() {
-  download('/trade-compliance-library/countries/export', searchParams.value, `国家_${new Date().getTime()}.xlsx`);
+  download(
+    '/business/trade-compliance-library/countries/export',
+    searchParams.value,
+    `国家_${new Date().getTime()}.xlsx`
+  );
 }
 </script>
 

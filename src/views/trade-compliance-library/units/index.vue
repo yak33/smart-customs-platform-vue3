@@ -160,7 +160,11 @@ function edit(id: CommonType.IdType) {
 }
 
 function handleExport() {
-  download('/trade-compliance-library/units/export', searchParams.value, `计量单位_${new Date().getTime()}.xlsx`);
+  download(
+    '/business/trade-compliance-library/units/export',
+    searchParams.value,
+    `计量单位_${new Date().getTime()}.xlsx`
+  );
 }
 </script>
 

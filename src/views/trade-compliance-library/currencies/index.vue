@@ -177,7 +177,11 @@ function edit(id: CommonType.IdType) {
 }
 
 function handleExport() {
-  download('/trade-compliance-library/currencies/export', searchParams.value, `币制_${new Date().getTime()}.xlsx`);
+  download(
+    '/business/trade-compliance-library/currencies/export',
+    searchParams.value,
+    `币制_${new Date().getTime()}.xlsx`
+  );
 }
 </script>
 

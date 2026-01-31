@@ -250,7 +250,11 @@ function edit(id: CommonType.IdType) {
 }
 
 function handleExport() {
-  download('/trade-compliance-library/hscode/export', searchParams.value, `海关编码税则_${new Date().getTime()}.xlsx`);
+  download(
+    '/business/trade-compliance-library/hscode/export',
+    searchParams.value,
+    `海关编码税则_${new Date().getTime()}.xlsx`
+  );
 }
 </script>
 
